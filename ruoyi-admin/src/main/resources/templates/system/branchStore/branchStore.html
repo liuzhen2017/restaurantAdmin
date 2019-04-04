@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								店名：<input type="text" name="storeName"/>
+							</li>
+							<li>
+								電話：<input type="text" name="phone"/>
+							</li>
+							<li>
+								店长：<input type="text" name="shopkeeper"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:branchStore:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:branchStore:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+     <script type="text/javascript" src="../../../util.js"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:branchStore:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:branchStore:remove')}]];
+        var prefix = ctx + "system/branchStore";
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "分店管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序號',
+					visible: false
+				},
+				{
+					field : 'storeName', 
+					title : '店名',
+					sortable: true
+				},
+				{
+					field : 'phone', 
+					title : '電話',
+					sortable: true
+				},
+				{
+					field : 'mangerMan', 
+					title : '負責人',
+					sortable: true
+				},
+				{
+					field : 'mangerManTel', 
+					title : '負責人電話',
+					sortable: true
+				},
+				{
+					field : 'shopkeeper', 
+					title : '店長',
+					sortable: true
+				},
+				{
+					field : 'createDate', 
+					title : '成立日期',
+					sortable: true
+				},
+				{
+					field : 'effectiveBegin', 
+					title : '有效日期開始',
+					sortable: true
+				},
+				{
+					field : 'effectiveEnd', 
+					title : '有效日期結束',
+					sortable: true
+				},
+				{
+					field : 'businessBegin', 
+					title : '開始營業時間',
+					sortable: true
+				},
+				{
+					field : 'businessEnd', 
+					title : '結束營業時間',
+					sortable: true
+				},
+				{
+					field : 'regionId', 
+					title : '區域',
+					formatter: function(value, row, index) {
+                    	if(value =="1"){
+                    		return  "荃湾区";
+                    	}else if(value =="2"){
+                    		return  "灣仔區";
+                    	}else if(value =="3"){
+                    		return  "東區";
+                    	}else if(value =="4"){
+                    		return  "南區";
+                    	}else if(value =="5"){
+                    		return  "油尖旺區";
+                    	}else if(value =="6"){
+                    		return  "深水埗區";
+                    	}else if(value =="7"){
+                    		return  "九龍城區";
+                    	}else if(value =="8"){
+                    		return  "中西區";
+                    	}else if(value =="9"){
+                    		return  "觀塘區";
+                    	}else if(value =="10"){
+                    		return  "離島區";
+                    	}else if(value =="11"){
+                    		return  "屯门区";
+                    	}else if(value =="12"){
+                    		return  "元朗區";
+                    	}else if(value =="13"){
+                    		return  "北區";
+                    	}else if(value =="14"){
+                    		return  "大埔區";
+                    	}else if(value =="15"){
+                    		return  "西貢區";
+                    	}else if(value =="16"){
+                    		return  "沙田區";
+                    	}else if(value =="17"){
+                    		return  "葵青區";
+                    	}else if(value =="18"){
+                    		return  "黃大仙區";
+                    	}
+                    }
+				},
+				{
+					field : 'address', 
+					title : '詳細地址',
+				},
+				{
+					field : 'googleUrl', 
+					title : '谷歌地址',
+				},
+				{
+					field : 'isVaild', 
+					title : '是否注銷',
+					formatter: function(value, row, index) {
+                    	if(value =="yes"){
+                    		return  "有效";
+                    	}
+                    	return "無效";
+                    }
+				},
+				{
+					field : 'createBy', 
+					title : '創建人',
+					sortable: true
+				},
+				{
+					field : 'picUrl', 
+					title : '圖片',
+					formatter:function(value,row,index){
+						if(value){
+						  return '<a href="javascript:void(0)" onclick=openImg("'+value+'")>查看圖片 </a>';
+						}
+					}
+					
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>編輯</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+            
+           
+          
+        });
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+		.layui-laydate-content>.layui-laydate-list {
+	            padding-bottom: 0px;
+	            overflow: hidden;
+	        }
+	        .layui-laydate-content>.layui-laydate-list>li{
+	            width:50%
+	        }
+ 
+			.merge-box .scrollbox .merge-list {
+			    padding-bottom: 5px;
+			}
+ 
+</style>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-branchStore-edit" th:object="${branchStore}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">店名：</label>
+				<div class="col-sm-8">
+					<input id="storeName" name="storeName" th:field="*{storeName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">電話：</label>
+				<div class="col-sm-8">
+					<input id="phone" name="phone" th:field="*{phone}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">負責人：</label>
+				<div class="col-sm-8">
+					<input id="mangerMan" name="mangerMan" th:field="*{mangerMan}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">負責人電話：</label>
+				<div class="col-sm-8">
+					<input id="mangerManTel" name="mangerManTel" th:field="*{mangerManTel}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">店长：</label>
+				<div class="col-sm-8">
+					<input id="shopkeeper" name="shopkeeper" th:field="*{shopkeeper}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">成立日期：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">有效日期開始：</label>
+				<div class="col-sm-8">
+					<input id="effectiveBegin" name="effectiveBegin" th:field="*{effectiveBegin}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">有效日期結束：</label>
+				<div class="col-sm-8">
+					<input id="effectiveEnd" name="effectiveEnd" th:field="*{effectiveEnd}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">開始营业日期：</label>
+				<div class="col-sm-8">
+					<input id="businessBegin" name="businessBegin" th:field="*{businessBegin}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">結束营业日期：</label>
+				<div class="col-sm-8">
+					<input id="businessEnd" name="businessEnd" th:field="*{businessEnd}" class="form-control"   type="text">
+				</div>
+			</div>
+				<div class="form-group">
+				<label class="col-sm-3 control-label">注銷?：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+                         <input type="checkbox" th:checked="${branchStore.isVaild == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isValid" name="isValid">
+                          <label class="onoffswitch-label" for="isValid"> <span
+							class="onoffswitch-inner" id="choiseYes"></span> <span
+							class="onoffswitch-switch" id="choiseNo" ></span>
+						</label>
+                     </div>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">圖片：</label>
+				<div class="col-sm-8">
+				    <input id="file" name="file" class="form-control" type="file">
+					<input id="picUrl" name="picUrl" th:field="*{picUrl}" type="hidden">
+				    <a href="javascript:void(0)" onclick='openImg(document.getElementById("picUrl").value)'>查看圖片 </a>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">區域：</label>
+				<div class="col-sm-8">
+				   <a href="#" onclick="showRegion()">點擊選擇區域</a>
+					<input id="regionName" readonly="readonly" name="regionName" th:field="*{regionName}"	class="form-control" type="text">
+					<input id="regionId" name="regionId" 	type="hidden">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">具體地址：</label>
+				<div class="col-sm-8">
+					<input id="address" th:field="*{address}" name="address" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">谷歌地址：</label>
+				<div class="col-sm-8">
+					<input id="googleUrl" name="googleUrl" th:field="*{googleUrl}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+     <script type="text/javascript" src="../../../util.js"></script>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        
+        laydate.render({
+        	  elem: '#businessBegin'
+        	  ,type: 'time'
+        	});
+        laydate.render({
+      	  elem: '#businessEnd'
+      	  ,type: 'time'
+      	});
+        laydate.render({
+        	  elem: '#createDate'
+        	  ,type: 'date'
+        	});
+        var startDate = laydate.render({
+            elem: '#effectiveBegin',
+            max: $('#effectiveEnd').val(),
+            theme: 'molv',
+            trigger: 'click',
+            type : 'date',
+            done: function(value, date) {
+                // 结束时间大于开始时间
+                if (value !== '') {
+                    endDate.config.min.year = date.year;
+                    endDate.config.min.month = date.month - 1;
+                    endDate.config.min.date = date.date;
+                } else {
+                    endDate.config.min.year = '';
+                    endDate.config.min.month = '';
+                    endDate.config.min.date = '';
+                }
+            }
+        });
+        var endDate = laydate.render({
+            elem: '#effectiveEnd',
+            min: $('#effectiveBegin').val(),
+            theme: 'molv',
+            trigger: 'click',
+            type : 'date',
+            done: function(value, date) {
+                // 开始时间小于结束时间
+                if (value !== '') {
+                    startDate.config.max.year = date.year;
+                    startDate.config.max.month = date.month - 1;
+                    startDate.config.max.date = date.date;
+                } else {
+                    startDate.config.max.year = '';
+                    startDate.config.max.month = '';
+                    startDate.config.max.date = '';
+                }
+            }
+        });
+    });
+    
+		var prefix = ctx + "system/branchStore"
+		$("#form-branchStore-add").validate({
+			rules:{
+				storeName:{
+					required:true,
+				},
+				address:{
+					required:true,
+				},
+				phone:{
+					required:true,
+				},
+				mangerMan:{
+					required:true,
+				},
+				mangerManTel:{
+					required:true,
+				},
+				createDate:{
+					required:true,
+				},
+				effectiveBegin:{
+					required:true,
+				},
+				effectiveEnd:{
+					required:true,
+				},
+				businessBegin:{
+					required:true,
+				},
+				businessEnd:{
+					required:true,
+				}
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	var url =uploadFile();;
+	        	if(url){
+  		        	$("#picUrl").val(url);
+	        	}
+	        		
+	        	var data =$('#form-branchStore-add').serialize();
+	        	$.operate.save(prefix + "/edit", $('#form-branchStore-edit').serialize());
+	        }
+	    }
+		function showRegion(){
+			openPage('选择区域',"/system/branchStore/SelectStoreRegion",600,500);
+	   }
+	</script>
+    
+	
+</body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BannerMapper">
+    
+    <resultMap type="Banner" id="BannerResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="describes"    column="describes"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="orderBy"    column="order_by"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="effectiveTimeBegin"    column="effective_time_begin"    />
+        <result property="effectiveTimeEnd"    column="effective_time_end"    />
+    </resultMap>
+	
+	<sql id="selectBannerVo">
+        select id, title, describes, pic_url, order_by, is_vaild, effective_time_begin, effective_time_end from banner
+    </sql>
+	
+    <select id="selectBannerList" parameterType="Banner" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="describes != null  and describes != '' "> and describes = #{describes}</if>
+             <if test="picUrl != null  and picUrl != '' "> and pic_url = #{picUrl}</if>
+             <if test="orderBy != null "> and order_by = #{orderBy}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="effectiveTimeBegin != null  and effectiveTimeBegin != '' "> and effective_time_begin = #{effectiveTimeBegin}</if>
+             <if test="effectiveTimeEnd != null  and effectiveTimeEnd != '' "> and effective_time_end = #{effectiveTimeEnd}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectBannerById" parameterType="Integer" resultMap="BannerResult">
+        <include refid="selectBannerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBanner" parameterType="Banner" useGeneratedKeys="true" keyProperty="id">
+        insert into banner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="describes != null  and describes != ''  ">describes,</if>
+			<if test="picUrl != null  and picUrl != ''  ">pic_url,</if>
+			<if test="orderBy != null  ">order_by,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin,</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="describes != null  and describes != ''  ">#{describes},</if>
+			<if test="picUrl != null  and picUrl != ''  ">#{picUrl},</if>
+			<if test="orderBy != null  ">#{orderBy},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">#{effectiveTimeBegin},</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">#{effectiveTimeEnd},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBanner" parameterType="Banner">
+        update banner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="describes != null  and describes != ''  ">describes = #{describes},</if>
+            <if test="picUrl != null  and picUrl != ''  ">pic_url = #{picUrl},</if>
+            <if test="orderBy != null  ">order_by = #{orderBy},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin = #{effectiveTimeBegin},</if>
+            <if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end = #{effectiveTimeEnd},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBannerById" parameterType="Integer">
+        delete from banner where id = #{id}
+    </delete>
+	
+    <delete id="deleteBannerByIds" parameterType="String">
+        delete from banner where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

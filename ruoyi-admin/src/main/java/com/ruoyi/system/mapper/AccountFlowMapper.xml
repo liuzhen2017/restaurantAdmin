@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AccountFlowMapper">
+    
+    <resultMap type="AccountFlow" id="AccountFlowResult">
+        <result property="id"    column="id"    />
+        <result property="accNo"    column="acc_no"    />
+        <result property="tranType"    column="tran_type"    />
+        <result property="money"    column="money"    />
+        <result property="tranDes"    column="tran_des"    />
+        <result property="beforeMoney"    column="before_money"    />
+        <result property="afterMoney"    column="after_money"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="menuId"    column="menu_id"    />
+        <result property="menuAccNo"    column="menu_acc_no"    />
+        <result property="branchStoreId"    column="branch_store_id"    />
+        <result property="branchStoreName"    column="branch_store_name"    />
+    </resultMap>
+	
+	<sql id="selectAccountFlowVo">
+        select id, acc_no, tran_type, money, tran_des, before_money, after_money, create_date, create_by, menu_id, menu_acc_no, branch_store_id, branch_store_name from account_flow
+    </sql>
+	
+    <select id="selectAccountFlowList" parameterType="AccountFlow" resultMap="AccountFlowResult">
+        <include refid="selectAccountFlowVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="accNo != null  and accNo != '' "> and acc_no = #{accNo}</if>
+             <if test="tranType != null "> and tran_type = #{tranType}</if>
+             <if test="money != null "> and money = #{money}</if>
+             <if test="tranDes != null  and tranDes != '' "> and tran_des = #{tranDes}</if>
+             <if test="beforeMoney != null "> and before_money = #{beforeMoney}</if>
+             <if test="afterMoney != null "> and after_money = #{afterMoney}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="menuId != null "> and menu_id = #{menuId}</if>
+             <if test="menuAccNo != null  and menuAccNo != '' "> and menu_acc_no = #{menuAccNo}</if>
+             <if test="branchStoreId != null  and branchStoreId != '' "> and branch_store_id = #{branchStoreId}</if>
+             <if test="branchStoreName != null  and branchStoreName != '' "> and branch_store_name = #{branchStoreName}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectAccountFlowById" parameterType="Integer" resultMap="AccountFlowResult">
+        <include refid="selectAccountFlowVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAccountFlow" parameterType="AccountFlow" useGeneratedKeys="true" keyProperty="id">
+        insert into account_flow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accNo != null  and accNo != ''  ">acc_no,</if>
+			<if test="tranType != null  ">tran_type,</if>
+			<if test="money != null  ">money,</if>
+			<if test="tranDes != null  and tranDes != ''  ">tran_des,</if>
+			<if test="beforeMoney != null  ">before_money,</if>
+			<if test="afterMoney != null  ">after_money,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="menuId != null  ">menu_id,</if>
+			<if test="menuAccNo != null  and menuAccNo != ''  ">menu_acc_no,</if>
+			<if test="branchStoreId != null  and branchStoreId != ''  ">branch_store_id,</if>
+			<if test="branchStoreName != null  and branchStoreName != ''  ">branch_store_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accNo != null  and accNo != ''  ">#{accNo},</if>
+			<if test="tranType != null  ">#{tranType},</if>
+			<if test="money != null  ">#{money},</if>
+			<if test="tranDes != null  and tranDes != ''  ">#{tranDes},</if>
+			<if test="beforeMoney != null  ">#{beforeMoney},</if>
+			<if test="afterMoney != null  ">#{afterMoney},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="menuId != null  ">#{menuId},</if>
+			<if test="menuAccNo != null  and menuAccNo != ''  ">#{menuAccNo},</if>
+			<if test="branchStoreId != null  and branchStoreId != ''  ">#{branchStoreId},</if>
+			<if test="branchStoreName != null  and branchStoreName != ''  ">#{branchStoreName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAccountFlow" parameterType="AccountFlow">
+        update account_flow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accNo != null  and accNo != ''  ">acc_no = #{accNo},</if>
+            <if test="tranType != null  ">tran_type = #{tranType},</if>
+            <if test="money != null  ">money = #{money},</if>
+            <if test="tranDes != null  and tranDes != ''  ">tran_des = #{tranDes},</if>
+            <if test="beforeMoney != null  ">before_money = #{beforeMoney},</if>
+            <if test="afterMoney != null  ">after_money = #{afterMoney},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="menuId != null  ">menu_id = #{menuId},</if>
+            <if test="menuAccNo != null  and menuAccNo != ''  ">menu_acc_no = #{menuAccNo},</if>
+            <if test="branchStoreId != null  and branchStoreId != ''  ">branch_store_id = #{branchStoreId},</if>
+            <if test="branchStoreName != null  and branchStoreName != ''  ">branch_store_name = #{branchStoreName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAccountFlowById" parameterType="Integer">
+        delete from account_flow where id = #{id}
+    </delete>
+	
+    <delete id="deleteAccountFlowByIds" parameterType="String">
+        delete from account_flow where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

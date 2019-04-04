@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CouponMangerMapper">
+    
+    <resultMap type="CouponManger" id="CouponMangerResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="types"    column="types"    />
+        <result property="rulesType"    column="rules_type"    />
+        <result property="couponValues"    column="coupon_values"    />
+        <result property="effectiveTimeBegin"    column="effective_time_begin"    />
+        <result property="effectiveTimeEnd"    column="effective_time_end"    />
+        <result property="num"    column="num"    />
+        <result property="membersType"    column="members_type"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="status"    column="status"    />
+        <result property="instructions"    column="instructions"    />
+        <result property="couponCode"    column="coupon_code"    />
+        <result property="noGrantNum"    column="no_grant_num"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="couponRole"    column="coupon_role"    />
+        <result property="explanation"    column="explanation"    />
+
+    </resultMap>
+	
+	<sql id="selectCouponMangerVo">
+        select id, title, types, rules_type, coupon_values, effective_time_begin, effective_time_end, num, members_type, is_vaild, create_date, create_by, update_date, update_by, status, instructions, coupon_code, no_grant_num,pic_url,coupon_role,explanation from coupon_manger
+    </sql>
+	
+    <select id="selectCouponMangerList" parameterType="CouponManger" resultMap="CouponMangerResult">
+        <include refid="selectCouponMangerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="types != null "> and types = #{types}</if>
+             <if test="rulesType != null "> and rules_type = #{rulesType}</if>
+             <if test="couponValues != null "> and coupon_values = #{couponValues}</if>
+             <if test="effectiveTimeBegin != null  and effectiveTimeBegin != '' "> and effective_time_begin = #{effectiveTimeBegin}</if>
+               <if test="effectiveTimeEnd != null and effectiveTimeEnd != '' ">and  STR_TO_DATE(`effective_time_end`,'%Y-%m-%d %H:%i:%s')> STR_TO_DATE(#{effectiveTimeEnd},'%Y-%m-%d %H:%i:%s')
+                    OR `effective_time_end` =''  </if>
+             <if test="num != null "> and num = #{num}</if>
+             <if test="membersType != null "> and members_type = #{membersType}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="updateDate != null "> and update_date = #{updateDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="instructions != null "> and instructions = #{instructions}</if>
+             <if test="couponCode != null  and couponCode != '' "> and coupon_code = #{couponCode}</if>
+             <if test="noGrantNum != null "> and no_grant_num = #{noGrantNum}</if>
+             <if test="couponRole != null "> and coupon_role = #{couponRole}</if>
+             
+             
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectCouponMangerById" parameterType="Integer" resultMap="CouponMangerResult">
+        <include refid="selectCouponMangerVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectCouponMangerByCouponCode" parameterType="String" resultMap="CouponMangerResult">
+        <include refid="selectCouponMangerVo"/>
+        where coupon_code = #{couponCode}
+        limit 1
+    </select>
+        
+    <insert id="insertCouponManger" parameterType="CouponManger" useGeneratedKeys="true" keyProperty="id">
+        insert into coupon_manger
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="types != null  ">types,</if>
+			<if test="rulesType != null  ">rules_type,</if>
+			<if test="couponValues != null  ">coupon_values,</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin,</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end,</if>
+			<if test="num != null  ">num,</if>
+			<if test="membersType != null  ">members_type,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="updateDate != null  ">update_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="status != null  ">status,</if>
+			<if test="instructions != null  ">instructions,</if>
+			<if test="couponCode != null  and couponCode != ''  ">coupon_code,</if>
+			<if test="noGrantNum != null  ">no_grant_num,</if>
+			<if test="picUrl != null  and picUrl != '' ">  pic_url,</if>
+			<if test="couponRole != null ">coupon_role ,</if>
+			<if test="explanation != null  and explanation != '' ">explanation,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="types != null  ">#{types},</if>
+			<if test="rulesType != null  ">#{rulesType},</if>
+			<if test="couponValues != null  ">#{couponValues},</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">#{effectiveTimeBegin},</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">#{effectiveTimeEnd},</if>
+			<if test="num != null  ">#{num},</if>
+			<if test="membersType != null  ">#{membersType},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="updateDate != null  ">#{updateDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="instructions != null  ">#{instructions},</if>
+			<if test="couponCode != null  and couponCode != ''  ">#{couponCode},</if>
+			<if test="noGrantNum != null  ">#{noGrantNum},</if>
+			<if test="picUrl != null  and picUrl != '' "> #{picUrl},</if>
+			<if test="couponRole != null ">  #{couponRole},</if>
+			<if test="explanation != null  and explanation != '' ">#{explanation}</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCouponManger" parameterType="CouponManger">
+        update coupon_manger
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="types != null  ">types = #{types},</if>
+            <if test="rulesType != null  ">rules_type = #{rulesType},</if>
+            <if test="couponValues != null  ">coupon_values = #{couponValues},</if>
+            <if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin = #{effectiveTimeBegin},</if>
+            <if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end = #{effectiveTimeEnd},</if>
+            <if test="num != null  ">num = #{num},</if>
+            <if test="membersType != null  ">members_type = #{membersType},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="updateDate != null  ">update_date = #{updateDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="instructions != null  ">instructions = #{instructions},</if>
+            <if test="couponCode != null  and couponCode != ''  ">coupon_code = #{couponCode},</if>
+            <if test="noGrantNum != null  ">no_grant_num = #{noGrantNum},</if>
+            <if test="picUrl != null  and picUrl != '' ">  pic_url = #{picUrl},</if>
+            <if test="couponRole != null ">  coupon_role = #{couponRole},</if>
+                    <if test="explanation != null  and explanation != '' "> explanation = #{explanation}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteCouponMangerById" parameterType="Integer">
+        delete from coupon_manger where id = #{id}
+    </delete>
+	
+    <delete id="deleteCouponMangerByIds" parameterType="String">
+        delete from coupon_manger where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

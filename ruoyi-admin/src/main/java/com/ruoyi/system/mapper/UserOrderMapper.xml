@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UserOrderMapper">
+    
+    <resultMap type="UserOrder" id="UserOrderResult">
+        <result property="id"    column="id"    />
+        <result property="payChannel"    column="pay_channel"    />
+        <result property="orderDesc"    column="order_desc"    />
+        <result property="token"    column="token"    />
+        <result property="email"    column="email"    />
+        <result property="currency"    column="currency"    />
+        <result property="ammount"    column="ammount"    />
+        <result property="tranUser"    column="tran_user"    />
+        <result property="tranUserName"    column="tran_user_name"    />
+        <result property="tranUserPhone"    column="tran_user_phone"    />
+        <result property="tranStatus"    column="tran_status"    />
+        <result property="tranMsg"    column="tran_msg"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+	
+	<sql id="selectOrderVo">
+        select id, pay_channel, order_desc, token, email, currency, ammount, tran_user, tran_user_name, tran_user_phone, tran_status, tran_msg, create_date, create_by from user_order
+    </sql>
+	
+    <select id="selectOrderList" parameterType="UserOrder" resultMap="UserOrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="payChannel != null  and payChannel != '' "> and pay_channel = #{payChannel}</if>
+             <if test="orderDesc != null  and orderDesc != '' "> and order_desc = #{orderDesc}</if>
+             <if test="token != null  and token != '' "> and token = #{token}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="currency != null  and currency != '' "> and currency = #{currency}</if>
+             <if test="ammount != null "> and ammount = #{ammount}</if>
+             <if test="tranUser != null  and tranUser != '' "> and tran_user = #{tranUser}</if>
+             <if test="tranUserName != null  and tranUserName != '' "> and tran_user_name = #{tranUserName}</if>
+             <if test="tranUserPhone != null  and tranUserPhone != '' "> and tran_user_phone = #{tranUserPhone}</if>
+             <if test="tranStatus != null  and tranStatus != '' "> and tran_status = #{tranStatus}</if>
+             <if test="tranMsg != null  and tranMsg != '' "> and tran_msg = #{tranMsg}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectOrderById" parameterType="Integer" resultMap="UserOrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrder" parameterType="UserOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into user_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="payChannel != null  and payChannel != ''  ">pay_channel,</if>
+			<if test="orderDesc != null  and orderDesc != ''  ">order_desc,</if>
+			<if test="token != null  and token != ''  ">token,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="currency != null  and currency != ''  ">currency,</if>
+			<if test="ammount != null  ">ammount,</if>
+			<if test="tranUser != null  and tranUser != ''  ">tran_user,</if>
+			<if test="tranUserName != null  and tranUserName != ''  ">tran_user_name,</if>
+			<if test="tranUserPhone != null  and tranUserPhone != ''  ">tran_user_phone,</if>
+			<if test="tranStatus != null  and tranStatus != ''  ">tran_status,</if>
+			<if test="tranMsg != null  and tranMsg != ''  ">tran_msg,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="payChannel != null  and payChannel != ''  ">#{payChannel},</if>
+			<if test="orderDesc != null  and orderDesc != ''  ">#{orderDesc},</if>
+			<if test="token != null  and token != ''  ">#{token},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="currency != null  and currency != ''  ">#{currency},</if>
+			<if test="ammount != null  ">#{ammount},</if>
+			<if test="tranUser != null  and tranUser != ''  ">#{tranUser},</if>
+			<if test="tranUserName != null  and tranUserName != ''  ">#{tranUserName},</if>
+			<if test="tranUserPhone != null  and tranUserPhone != ''  ">#{tranUserPhone},</if>
+			<if test="tranStatus != null  and tranStatus != ''  ">#{tranStatus},</if>
+			<if test="tranMsg != null  and tranMsg != ''  ">#{tranMsg},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOrder" parameterType="UserOrder">
+        update user_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="payChannel != null  and payChannel != ''  ">pay_channel = #{payChannel},</if>
+            <if test="orderDesc != null  and orderDesc != ''  ">order_desc = #{orderDesc},</if>
+            <if test="token != null  and token != ''  ">token = #{token},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="currency != null  and currency != ''  ">currency = #{currency},</if>
+            <if test="ammount != null  ">ammount = #{ammount},</if>
+            <if test="tranUser != null  and tranUser != ''  ">tran_user = #{tranUser},</if>
+            <if test="tranUserName != null  and tranUserName != ''  ">tran_user_name = #{tranUserName},</if>
+            <if test="tranUserPhone != null  and tranUserPhone != ''  ">tran_user_phone = #{tranUserPhone},</if>
+            <if test="tranStatus != null  and tranStatus != ''  ">tran_status = #{tranStatus},</if>
+            <if test="tranMsg != null  and tranMsg != ''  ">tran_msg = #{tranMsg},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOrderById" parameterType="Integer">
+        delete from user_order where id = #{id}
+    </delete>
+	
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from user_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

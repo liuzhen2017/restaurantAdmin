@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-integralRole-edit" th:object="${integralRole}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">標題：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" th:field="*{title}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-8">
+					<input id="descs" name="descs" th:field="*{descs}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">目標用戶：</label>
+				<div class="col-sm-8">
+					<!-- <input id="menmType" name="menmType" th:field="*{menmType}" class="form-control" type="text"> -->
+					<select name="menmType" th:field="*{menmType}">
+									<option value="">請選擇</option>
+									<option value="0">普通會員</option>
+									<option value="1">VIP會員</option>
+									<option value="2">全部通用</option>
+								</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">開始時間：</label>
+				<div class="col-sm-8">
+					<input id="beginTime" name="beginTime" th:field="*{beginTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">結束時間：</label>
+				<div class="col-sm-8">
+					<input id="endTime" name="endTime" th:field="*{endTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優先級：</label>
+				<div class="col-sm-8">
+					<input id="priority" name="priority" th:field="*{priority}" class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">積分類型：</label>
+				<div class="col-sm-8">
+					<!-- <input id="integralType" name="integralType" th:field="*{integralType}" class="form-control" type="text"> -->
+					<select name="integralType" th:field="*{integralType}">
+									<option value="">請選擇</option>
+									<option value="0">消費積分</option>
+									<option value="1">活動積分</option>
+								</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">積分值(倍)：</label>
+				<div class="col-sm-8">
+					<input id="scoreValue" name="scoreValue" th:field="*{scoreValue}" class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">注銷?：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+                         <input type="checkbox" th:checked="${integralRole.isValid == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isValid" name="isValid">
+                          <label class="onoffswitch-label" for="isValid"> <span
+							class="onoffswitch-inner" id="choiseYes"></span> <span
+							class="onoffswitch-switch" id="choiseNo" ></span>
+						</label>
+                     </div>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        
+        laydate.render({
+        	  elem: '#beginTime'
+        	  ,type: 'datetime'
+              ,lang: 'en'
+        	});
+        laydate.render({
+      	  elem: '#endTime'
+      	  ,type: 'datetime'
+      	  ,lang: 'en'
+      	});
+        var startDate = laydate.render({
+            elem: '#beginTime',
+            max: $('#endTime').val(),
+            theme: 'molv',
+            trigger: 'click',
+            type : 'date',
+            done: function(value, date) {
+                // 结束时间大于开始时间
+                if (value !== '') {
+                    endDate.config.min.year = date.year;
+                    endDate.config.min.month = date.month - 1;
+                    endDate.config.min.date = date.date;
+                } else {
+                    endDate.config.min.year = '';
+                    endDate.config.min.month = '';
+                    endDate.config.min.date = '';
+                }
+            }
+        });
+        var endDate = laydate.render({
+            elem: '#endTime',
+            min: $('#beginTime').val(),
+            theme: 'molv',
+            trigger: 'click',
+            type : 'date',
+            done: function(value, date) {
+                // 开始时间小于结束时间
+                if (value !== '') {
+                    startDate.config.max.year = date.year;
+                    startDate.config.max.month = date.month - 1;
+                    startDate.config.max.date = date.date;
+                } else {
+                    startDate.config.max.year = '';
+                    startDate.config.max.month = '';
+                    startDate.config.max.date = '';
+                }
+            }
+        });
+    });
+    
+		var prefix = ctx + "system/integralRole";
+		$("#form-integralRole-edit").validate({
+			rules:{
+				title:{
+					required:true,
+				},
+				descs:{
+					required:true,
+				},
+				menmType:{
+					required:true,
+				},
+				beginTime:{
+					required:true,
+				},
+				endTime:{
+					required:true,
+				},
+				priority:{
+					required:true,
+				},
+				integralType:{
+					required:true,
+				},
+				scoreValue:{
+					required:true,
+				}
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-integralRole-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

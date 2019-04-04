@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontalm" id="form-menuFood-add" >
+			<div class="form-group">
+				<label class="col-sm-3 control-label">標題：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" 
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">名稱：</label>
+				<div class="col-sm-8">
+					<input id=""name"" name="name" 
+						class="form-control" type="text">
+				</div>
+			</div>
+			<input id="title" name="title" 	type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-8">
+					<input id="describes" name="describes" 
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">類型：</label>
+				<div class="col-sm-8">
+						<a href="#" onclick="showMenuFoodType()">點擊選擇類型</a>
+					<input id="typeName" readonly="readonly" name="typeName" 	class="form-control" type="text">
+					<input id="typess" name="typess" 	type="hidden">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">價格(HKD)：</label>
+				<div class="col-sm-8">
+					<input id="price" name="price" 
+						class="form-control" type="number">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">請上傳餐牌圖片：</label>
+				<div class="col-sm-8">
+					<input id="file" name="file" class="form-control" type="file">
+					<input id="picUrl" name="picUrl" type="hidden">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">推送類型：</label>
+				<div class="col-sm-8">
+					<select name="isHot">
+					  <option value="0">普通</option>
+					  <option value="1">熱門</option>
+					  <option value="2">特別優惠</option>
+					  <option value="3">精選商品</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">選擇分店：</label>
+				<div class="col-sm-8">
+				    <a href="#" onclick="openBranStore()">如果是個別分店，點擊選擇分店</a>
+					<input id="branchStoreName" readonly="readonly" name="branchStoreName" 	class="form-control" type="text">
+					<input id="branchStoreId" name="branchStoreId" 	type="hidden">
+				</div>
+			</div>
+			
+			<br/>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" src="../../../util.js"></script>
+    
+    <script type="text/javascript">
+		var prefix = ctx + "system/menuFood"
+		$("#form-menuFood-add").validate({
+			rules:{
+				title : {
+					required : true,
+				},
+				describes : {
+					required : true,
+				},
+				title : {
+					required : true,
+				},
+				typeName : {
+					required : true,
+				},
+				price : {
+					required : true,
+				},
+				isHot : {
+					required : true,
+				}
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+			    var url =uploadFile();;
+        	   $("#picUrl").val(url);
+        	   if(!url){
+	        		return null;
+	        	}
+	            $.operate.save(prefix + "/add", $('#form-menuFood-add').serialize());
+	        }
+	    }
+		function showMenuFoodType(){
+			openPage('餐牌類型',"/system/menuFood/showMemFoodType",600,500);
+	   }
+		function openBranStore(){
+				openPage('选擇門店',"/system/branchStore/showListView",600,500);
+		}
+	</script>
+</body>
+</html>

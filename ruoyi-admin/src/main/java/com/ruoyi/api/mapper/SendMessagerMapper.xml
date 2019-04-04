@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.api.mapper.SendMessagerMapper">
+    
+    <resultMap type="SendMessager" id="SendMessagerResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="messageType"    column="message_type"    />
+        <result property="messageLanguage"    column="message_language"    />
+        <result property="messageReceiver"    column="message_receiver"    />
+        <result property="messageBody"    column="message_body"    />
+        <result property="replyMsg"    column="reply_msg"    />
+        <result property="replyCode"    column="reply_code"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="replyAllMsg"    column="reply_all_msg"    />
+    </resultMap>
+	
+	<sql id="selectSendMessagerVo">
+        select id, user_id, message_type, message_language, message_receiver, message_body, reply_msg, reply_code, create_date, reply_all_msg from send_messager
+    </sql>
+	
+    <select id="selectSendMessagerList" parameterType="SendMessager" resultMap="SendMessagerResult">
+        <include refid="selectSendMessagerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="userId != null  and userId != '' "> and user_id = #{userId}</if>
+             <if test="messageType != null  and messageType != '' "> and message_type = #{messageType}</if>
+             <if test="messageLanguage != null  and messageLanguage != '' "> and message_language = #{messageLanguage}</if>
+             <if test="messageReceiver != null  and messageReceiver != '' "> and message_receiver = #{messageReceiver}</if>
+             <if test="messageBody != null  and messageBody != '' "> and message_body = #{messageBody}</if>
+             <if test="replyMsg != null  and replyMsg != '' "> and reply_msg = #{replyMsg}</if>
+             <if test="replyCode != null  and replyCode != '' "> and reply_code = #{replyCode}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="replyAllMsg != null  and replyAllMsg != '' "> and reply_all_msg = #{replyAllMsg}</if>
+         </where>
+          order by id desc
+    </select>
+    
+    <select id="selectSendMessagerById" parameterType="Integer" resultMap="SendMessagerResult">
+        <include refid="selectSendMessagerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSendMessager" parameterType="SendMessager" useGeneratedKeys="true" keyProperty="id">
+        insert into send_messager
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null  and userId != ''  ">user_id,</if>
+			<if test="messageType != null  and messageType != ''  ">message_type,</if>
+			<if test="messageLanguage != null  and messageLanguage != ''  ">message_language,</if>
+			<if test="messageReceiver != null  and messageReceiver != ''  ">message_receiver,</if>
+			<if test="messageBody != null  and messageBody != ''  ">message_body,</if>
+			<if test="replyMsg != null  and replyMsg != ''  ">reply_msg,</if>
+			<if test="replyCode != null  and replyCode != ''  ">reply_code,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="replyAllMsg != null  and replyAllMsg != ''  ">reply_all_msg,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null  and userId != ''  ">#{userId},</if>
+			<if test="messageType != null  and messageType != ''  ">#{messageType},</if>
+			<if test="messageLanguage != null  and messageLanguage != ''  ">#{messageLanguage},</if>
+			<if test="messageReceiver != null  and messageReceiver != ''  ">#{messageReceiver},</if>
+			<if test="messageBody != null  and messageBody != ''  ">#{messageBody},</if>
+			<if test="replyMsg != null  and replyMsg != ''  ">#{replyMsg},</if>
+			<if test="replyCode != null  and replyCode != ''  ">#{replyCode},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="replyAllMsg != null  and replyAllMsg != ''  ">#{replyAllMsg},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSendMessager" parameterType="SendMessager">
+        update send_messager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null  and userId != ''  ">user_id = #{userId},</if>
+            <if test="messageType != null  and messageType != ''  ">message_type = #{messageType},</if>
+            <if test="messageLanguage != null  and messageLanguage != ''  ">message_language = #{messageLanguage},</if>
+            <if test="messageReceiver != null  and messageReceiver != ''  ">message_receiver = #{messageReceiver},</if>
+            <if test="messageBody != null  and messageBody != ''  ">message_body = #{messageBody},</if>
+            <if test="replyMsg != null  and replyMsg != ''  ">reply_msg = #{replyMsg},</if>
+            <if test="replyCode != null  and replyCode != ''  ">reply_code = #{replyCode},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="replyAllMsg != null  and replyAllMsg != ''  ">reply_all_msg = #{replyAllMsg},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSendMessagerById" parameterType="Integer">
+        delete from send_messager where id = #{id}
+    </delete>
+	
+    <delete id="deleteSendMessagerByIds" parameterType="String">
+        delete from send_messager where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

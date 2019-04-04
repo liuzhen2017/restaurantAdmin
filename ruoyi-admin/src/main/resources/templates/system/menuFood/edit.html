@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-menuFood-edit"
+			th:object="${menuFood}">
+			<input id="id" name="id" th:field="*{id}" type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">標題：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" th:field="*{title}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">名稱：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-8">
+					<input id="describes" name="describes" th:field="*{describes}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">類型：</label>
+				<div class="col-sm-8">
+						<a href="#" onclick="showMenuFoodType()">點擊選擇類型</a>
+					<input id="typeName" readonly="readonly" name="typeName"  th:field="*{typeName}"	class="form-control" type="text">
+					<input id="typess" name="typess" 	type="hidden">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">價格(HKD)：</label>
+				<div class="col-sm-8">
+					<input id="price" name="price" th:field="*{price}"
+						class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">請上傳餐牌圖片：</label>
+				<div class="col-sm-8">
+					<input id="file" name="file" class="form-control" type="file">
+					<input id="picUrl" name="picUrl" type="hidden">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">選擇分店：</label>
+				<div class="col-sm-8">
+				    <a href="#" onclick="openBranStore()">如果是個別分店，點擊選擇分店</a>
+					<input id="branchStoreName" readonly="readonly" name="branchStoreName" 	class="form-control" type="text">
+					<input id="branchStoreId" name="branchStoreId" 	type="hidden">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">推送类型：</label>
+				<div class="col-sm-8">
+					<select name="isHot" th:field="*{isHot}">
+					 <option value="0">普通</option>
+					  <option value="1">熱門</option>
+					  <option value="2">特別優惠</option>
+					  <option value="3">精選商品</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否有效：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${menuFood.isValid == 'yes' ? true : false}"
+							class="onoffswitch-checkbox" id="isValid" name="isValid">
+						<label class="onoffswitch-label" for="isValid"> <span
+							class="onoffswitch-inner" id="choiseYes"></span> <span
+							class="onoffswitch-switch" id="choiseNo"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否售罄：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+						<input type="checkbox"
+							th:checked="${menuFood.isSellOut == 'yes' ? true : false}"
+							class="onoffswitch-checkbox" id="isSellOut" name="isSellOut">
+						<label class="onoffswitch-label" for="isSellOut"> <span
+							class="onoffswitch-inner" id="choiseYesSellOut"></span> <span
+							class="onoffswitch-switch" id="choiseNoSellOut"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:include="include::footer"></div>
+	 <script type="text/javascript" src="../../../util.js"></script>
+	<script type="text/javascript">
+		var prefix = ctx + "system/menuFood";
+		$("#form-menuFood-edit").validate({
+			rules : {
+				title : {
+					required : true,
+				},
+				describes : {
+					required : true,
+				},
+				title : {
+					required : true,
+				},
+				typeName : {
+					required : true,
+				},
+				price : {
+					required : true,
+				},
+				isHot : {
+					required : true,
+				}
+				
+			}
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				var url =uploadFile();;
+	        	if(url){
+  		        	$("#picUrl").val(url);
+	        	}
+				
+				$.operate.save(prefix + "/edit", $('#form-menuFood-edit')
+						.serialize());
+			}
+		}
+		function showMenuFoodType(){
+			openPage('餐牌類型',"/system/menuFood/showMemFoodType",600,500);
+	   }
+		function openBranStore(){
+			openPage('擇門店',"/system/branchStore/showListView",600,500);
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BranchStoreMapper">
+    
+   
+    <resultMap type="BranchStore" id="BranchStoreResult">
+        <result property="id"    column="id"    />
+        <result property="storeName"    column="store_name"    />
+        <result property="address"    column="address"    />
+        <result property="phone"    column="phone"    />
+        <result property="mangerMan"    column="manger_Man"    />
+        <result property="mangerManTel"    column="manger_man_tel"    />
+        <result property="shopkeeper"    column="shopkeeper"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="effectiveBegin"    column="effective_begin"    />
+        <result property="effectiveEnd"    column="effective_end"    />
+        <result property="businessBegin"    column="business_begin"    />
+        <result property="businessEnd"    column="business_end"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="region"    column="region"    />
+        <result property="regionId"    column="region_id"    />
+        <result property="googleUrl"    column="google_url"    />
+        <result property="regionName"    column="region_name"    />
+        <result property="storeNo"    column="store_no"    />
+        <result property="spareField1"    column="spare_field1"    />
+        <result property="spareField2"    column="spare_field2"    />
+        <result property="spareField3"    column="spare_field3"    />
+        <result property="spareField4"    column="spare_field4"    />
+        <result property="spareField5"    column="spare_field5"    />
+        <result property="spareField6"    column="spare_field6"    />
+        <result property="spareField7"    column="spare_field7"    />
+        <result property="spareField8"    column="spare_field8"    />
+        <result property="spareField9"    column="spare_field9"    />
+    </resultMap>
+	
+	<sql id="selectBranchStoreVo">
+        select id, store_name, address, phone, manger_Man, manger_man_tel, shopkeeper, create_date, effective_begin, effective_end, business_begin, business_end, is_vaild, create_by, pic_url, region, region_id, google_url, region_name, store_no, spare_field1, spare_field2, spare_field3, spare_field4, spare_field5, spare_field6, spare_field7, spare_field8, spare_field9 from branch_store
+    </sql>
+	
+    <select id="selectBranchStoreList" parameterType="BranchStore" resultMap="BranchStoreResult">
+        <include refid="selectBranchStoreVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="storeName != null  and storeName != '' "> and store_name = #{storeName}</if>
+             <if test="address != null  and address != '' "> and address = #{address}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="mangerMan != null  and mangerMan != '' "> and manger_Man = #{mangerMan}</if>
+             <if test="mangerManTel != null  and mangerManTel != '' "> and manger_man_tel = #{mangerManTel}</if>
+             <if test="shopkeeper != null  and shopkeeper != '' "> and shopkeeper = #{shopkeeper}</if>
+             <if test="createDate != null  and createDate != '' "> and create_date = #{createDate}</if>
+             <if test="effectiveBegin != null  and effectiveBegin != '' "> and effective_begin = #{effectiveBegin}</if>
+             <if test="effectiveEnd != null  and effectiveEnd != '' "> and effective_end = #{effectiveEnd}</if>
+             <if test="businessBegin != null  and businessBegin != '' "> and business_begin = #{businessBegin}</if>
+             <if test="businessEnd != null  and businessEnd != '' "> and business_end = #{businessEnd}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="picUrl != null  and picUrl != '' "> and pic_url = #{picUrl}</if>
+             <if test="region != null  and region != '' "> and region = #{region}</if>
+             <if test="regionId != null "> and region_id = #{regionId}</if>
+             <if test="googleUrl != null  and googleUrl != '' "> and google_url = #{googleUrl}</if>
+             <if test="regionName != null  and regionName != '' "> and region_name = #{regionName}</if>
+             <if test="storeNo != null "> and store_no = #{storeNo}</if>
+             <if test="spareField1 != null  and spareField1 != '' "> and spare_field1 = #{spareField1}</if>
+             <if test="spareField2 != null  and spareField2 != '' "> and spare_field2 = #{spareField2}</if>
+             <if test="spareField3 != null  and spareField3 != '' "> and spare_field3 = #{spareField3}</if>
+             <if test="spareField4 != null  and spareField4 != '' "> and spare_field4 = #{spareField4}</if>
+             <if test="spareField5 != null  and spareField5 != '' "> and spare_field5 = #{spareField5}</if>
+             <if test="spareField6 != null  and spareField6 != '' "> and spare_field6 = #{spareField6}</if>
+             <if test="spareField7 != null  and spareField7 != '' "> and spare_field7 = #{spareField7}</if>
+             <if test="spareField8 != null  and spareField8 != '' "> and spare_field8 = #{spareField8}</if>
+             <if test="spareField9 != null  and spareField9 != '' "> and spare_field9 = #{spareField9}</if>
+         </where>
+    </select>
+    
+    <select id="selectBranchStoreById" parameterType="Integer" resultMap="BranchStoreResult">
+        <include refid="selectBranchStoreVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBranchStore" parameterType="BranchStore" useGeneratedKeys="true" keyProperty="id">
+        insert into branch_store
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="storeName != null  and storeName != ''  ">store_name,</if>
+			<if test="address != null  and address != ''  ">address,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="mangerMan != null  and mangerMan != ''  ">manger_Man,</if>
+			<if test="mangerManTel != null  and mangerManTel != ''  ">manger_man_tel,</if>
+			<if test="shopkeeper != null  and shopkeeper != ''  ">shopkeeper,</if>
+			<if test="createDate != null  and createDate != ''  ">create_date,</if>
+			<if test="effectiveBegin != null  and effectiveBegin != ''  ">effective_begin,</if>
+			<if test="effectiveEnd != null  and effectiveEnd != ''  ">effective_end,</if>
+			<if test="businessBegin != null  and businessBegin != ''  ">business_begin,</if>
+			<if test="businessEnd != null  and businessEnd != ''  ">business_end,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="picUrl != null  and picUrl != ''  ">pic_url,</if>
+			<if test="region != null  and region != ''  ">region,</if>
+			<if test="regionId != null  ">region_id,</if>
+			<if test="googleUrl != null  and googleUrl != ''  ">google_url,</if>
+			<if test="regionName != null  and regionName != ''  ">region_name,</if>
+			<if test="storeNo != null  ">store_no,</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">spare_field1,</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">spare_field2,</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">spare_field3,</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">spare_field4,</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">spare_field5,</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">spare_field6,</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">spare_field7,</if>
+			<if test="spareField8 != null  and spareField8 != ''  ">spare_field8,</if>
+			<if test="spareField9 != null  and spareField9 != ''  ">spare_field9,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="storeName != null  and storeName != ''  ">#{storeName},</if>
+			<if test="address != null  and address != ''  ">#{address},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="mangerMan != null  and mangerMan != ''  ">#{mangerMan},</if>
+			<if test="mangerManTel != null  and mangerManTel != ''  ">#{mangerManTel},</if>
+			<if test="shopkeeper != null  and shopkeeper != ''  ">#{shopkeeper},</if>
+			<if test="createDate != null  and createDate != ''  ">#{createDate},</if>
+			<if test="effectiveBegin != null  and effectiveBegin != ''  ">#{effectiveBegin},</if>
+			<if test="effectiveEnd != null  and effectiveEnd != ''  ">#{effectiveEnd},</if>
+			<if test="businessBegin != null  and businessBegin != ''  ">#{businessBegin},</if>
+			<if test="businessEnd != null  and businessEnd != ''  ">#{businessEnd},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="picUrl != null  and picUrl != ''  ">#{picUrl},</if>
+			<if test="region != null  and region != ''  ">#{region},</if>
+			<if test="regionId != null  ">#{regionId},</if>
+			<if test="googleUrl != null  and googleUrl != ''  ">#{googleUrl},</if>
+			<if test="regionName != null  and regionName != ''  ">#{regionName},</if>
+			<if test="storeNo != null  ">#{storeNo},</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">#{spareField1},</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">#{spareField2},</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">#{spareField3},</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">#{spareField4},</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">#{spareField7},</if>
+			<if test="spareField8 != null  and spareField8 != ''  ">#{spareField8},</if>
+			<if test="spareField9 != null  and spareField9 != ''  ">#{spareField9},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBranchStore" parameterType="BranchStore">
+        update branch_store
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="storeName != null  and storeName != ''  ">store_name = #{storeName},</if>
+            <if test="address != null  and address != ''  ">address = #{address},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="mangerMan != null  and mangerMan != ''  ">manger_Man = #{mangerMan},</if>
+            <if test="mangerManTel != null  and mangerManTel != ''  ">manger_man_tel = #{mangerManTel},</if>
+            <if test="shopkeeper != null  and shopkeeper != ''  ">shopkeeper = #{shopkeeper},</if>
+            <if test="createDate != null  and createDate != ''  ">create_date = #{createDate},</if>
+            <if test="effectiveBegin != null  and effectiveBegin != ''  ">effective_begin = #{effectiveBegin},</if>
+            <if test="effectiveEnd != null  and effectiveEnd != ''  ">effective_end = #{effectiveEnd},</if>
+            <if test="businessBegin != null  and businessBegin != ''  ">business_begin = #{businessBegin},</if>
+            <if test="businessEnd != null  and businessEnd != ''  ">business_end = #{businessEnd},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="picUrl != null  and picUrl != ''  ">pic_url = #{picUrl},</if>
+            <if test="region != null  and region != ''  ">region = #{region},</if>
+            <if test="regionId != null  ">region_id = #{regionId},</if>
+            <if test="googleUrl != null  and googleUrl != ''  ">google_url = #{googleUrl},</if>
+            <if test="regionName != null  and regionName != ''  ">region_name = #{regionName},</if>
+            <if test="storeNo != null  ">store_no = #{storeNo},</if>
+            <if test="spareField1 != null  and spareField1 != ''  ">spare_field1 = #{spareField1},</if>
+            <if test="spareField2 != null  and spareField2 != ''  ">spare_field2 = #{spareField2},</if>
+            <if test="spareField3 != null  and spareField3 != ''  ">spare_field3 = #{spareField3},</if>
+            <if test="spareField4 != null  and spareField4 != ''  ">spare_field4 = #{spareField4},</if>
+            <if test="spareField5 != null  and spareField5 != ''  ">spare_field5 = #{spareField5},</if>
+            <if test="spareField6 != null  and spareField6 != ''  ">spare_field6 = #{spareField6},</if>
+            <if test="spareField7 != null  and spareField7 != ''  ">spare_field7 = #{spareField7},</if>
+            <if test="spareField8 != null  and spareField8 != ''  ">spare_field8 = #{spareField8},</if>
+            <if test="spareField9 != null  and spareField9 != ''  ">spare_field9 = #{spareField9},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBranchStoreById" parameterType="Integer">
+        delete from branch_store where id = #{id}
+    </delete>
+	
+    <delete id="deleteBranchStoreByIds" parameterType="String">
+        delete from branch_store where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
+

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MenuFoodTypeMapper">
+    
+    <resultMap type="MenuFoodType" id="MenuFoodTypeResult">
+        <result property="id"    column="id"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="orderBy"    column="order_by"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="describes"    column="describes"    />
+        <result property="isVaild"    column="is_vaild"    />
+    </resultMap>
+	
+	<sql id="selectMenuFoodTypeVo">
+        select id, type_name, order_by, pic_url, describes, is_vaild from menu_food_type
+    </sql>
+	
+    <select id="selectMenuFoodTypeList" parameterType="MenuFoodType" resultMap="MenuFoodTypeResult">
+        <include refid="selectMenuFoodTypeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="typeName != null  and typeName != '' "> and type_name = #{typeName}</if>
+             <if test="orderBy != null "> and order_by = #{orderBy}</if>
+             <if test="picUrl != null  and picUrl != '' "> and pic_url = #{picUrl}</if>
+             <if test="describes != null  and describes != '' "> and describes = #{describes}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectMenuFoodTypeById" parameterType="Integer" resultMap="MenuFoodTypeResult">
+        <include refid="selectMenuFoodTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMenuFoodType" parameterType="MenuFoodType" useGeneratedKeys="true" keyProperty="id">
+        insert into menu_food_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeName != null  and typeName != ''  ">type_name,</if>
+			<if test="orderBy != null  ">order_by,</if>
+			<if test="picUrl != null  and picUrl != ''  ">pic_url,</if>
+			<if test="describes != null  and describes != ''  ">describes,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeName != null  and typeName != ''  ">#{typeName},</if>
+			<if test="orderBy != null  ">#{orderBy},</if>
+			<if test="picUrl != null  and picUrl != ''  ">#{picUrl},</if>
+			<if test="describes != null  and describes != ''  ">#{describes},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMenuFoodType" parameterType="MenuFoodType">
+        update menu_food_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeName != null  and typeName != ''  ">type_name = #{typeName},</if>
+            <if test="orderBy != null  ">order_by = #{orderBy},</if>
+            <if test="picUrl != null  and picUrl != ''  ">pic_url = #{picUrl},</if>
+            <if test="describes != null  and describes != ''  ">describes = #{describes},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMenuFoodTypeById" parameterType="Integer">
+        delete from menu_food_type where id = #{id}
+    </delete>
+	
+    <delete id="deleteMenuFoodTypeByIds" parameterType="String">
+        delete from menu_food_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

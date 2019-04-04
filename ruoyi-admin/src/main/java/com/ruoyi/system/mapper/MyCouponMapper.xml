@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MyCouponMapper">
+    
+      <resultMap type="MyCoupon" id="MyCouponResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="membersId"    column="members_id"    />
+        <result property="membersType"    column="members_type"    />
+        <result property="couponType"    column="coupon_type"    />
+        <result property="effectiveTimeBegin"    column="effective_time_begin"    />
+        <result property="effectiveTimeEnd"    column="effective_time_end"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="status"    column="status"    />
+        <result property="instructions"    column="instructions"    />
+        <result property="couponCode"    column="coupon_code"    />
+        <result property="couponValues"    column="coupon_values"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="couponRole"    column="coupon_role"    />
+        <result property="explanation"    column="explanation"    />
+         <result property="spareField1"    column="spare_field1"    />
+        <result property="spareField2"    column="spare_field2"    />
+        <result property="spareField3"    column="spare_field3"    />
+        <result property="spareField4"    column="spare_field4"    />
+        <result property="spareField5"    column="spare_field5"    />
+        <result property="spareField6"    column="spare_field6"    />
+        <result property="spareField7"    column="spare_field7"    />
+        <result property="spareField8"    column="spare_field8"    />
+        <result property="spareField9"    column="spare_field9"    />
+    </resultMap>
+	
+	<sql id="selectMyCouponVo">
+        select id, title, coupon_id, members_id, members_type, coupon_type, effective_time_begin, effective_time_end, create_date, is_vaild, status, instructions, coupon_code, coupon_values,pic_url,coupon_role,explanation, spare_field1, spare_field2, spare_field3, spare_field4, spare_field5, spare_field6, spare_field7, spare_field8, spare_field9  from my_coupon
+    </sql>
+	
+    <select id="selectMyCouponList" parameterType="MyCoupon" resultMap="MyCouponResult">
+        <include refid="selectMyCouponVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="couponId != null "> and coupon_id = #{couponId}</if>
+             <if test="membersId != null "> and members_id = #{membersId}</if>
+             <if test="membersType != null "> and members_type = #{membersType}</if>
+             <if test="couponType != null "> and coupon_type = #{couponType}</if>
+             <if test="effectiveTimeBegin != null  and effectiveTimeBegin != '' "> and effective_time_begin = #{effectiveTimeBegin}</if>
+             <if test="effectiveTimeEnd != null  and effectiveTimeEnd != '' "> and effective_time_end = #{effectiveTimeEnd}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="instructions != null  and instructions != '' "> and instructions = #{instructions}</if>
+             <if test="couponCode != null  and couponCode != '' "> and coupon_code = #{couponCode}</if>
+             <if test="couponValues != null "> and coupon_values = #{couponValues}</if>
+             <if test="couponRole != null "> and coupon_role = #{couponRole}</if>
+             <if test="explanation != null  and explanation != '' "> and explanation = #{explanation}</if>
+             <if test="spareField1 != null  and spareField1 != '' "> and spare_field1 = #{spareField1}</if>
+             <if test="spareField2 != null  and spareField2 != '' "> and spare_field2 = #{spareField2}</if>
+             <if test="spareField3 != null  and spareField3 != '' "> and spare_field3 = #{spareField3}</if>
+             <if test="spareField4 != null  and spareField4 != '' "> and spare_field4 = #{spareField4}</if>
+             <if test="spareField5 != null  and spareField5 != '' "> and spare_field5 = #{spareField5}</if>
+             <if test="spareField6 != null  and spareField6 != '' "> and spare_field6 = #{spareField6}</if>
+             <if test="spareField7 != null  and spareField7 != '' "> and spare_field7 = #{spareField7}</if>
+             <if test="spareField8 != null  and spareField8 != '' "> and spare_field8 = #{spareField8}</if>
+             <if test="spareField9 != null  and spareField9 != '' "> and spare_field9 = #{spareField9}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectMyCouponById" parameterType="Integer" resultMap="MyCouponResult">
+        <include refid="selectMyCouponVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMyCoupon" parameterType="MyCoupon" useGeneratedKeys="true" keyProperty="id">
+        insert into my_coupon
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="couponId != null  ">coupon_id,</if>
+			<if test="membersId != null  ">members_id,</if>
+			<if test="membersType != null  ">members_type,</if>
+			<if test="couponType != null  ">coupon_type,</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin,</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="status != null  ">status,</if>
+			<if test="instructions != null  and instructions != ''  ">instructions,</if>
+			<if test="couponCode != null  and couponCode != ''  ">coupon_code,</if>
+			<if test="couponValues != null  ">coupon_values,</if>
+			<if test="picUrl != null  and picUrl != '' "> pic_url,</if>
+			<if test="couponRole != null ">  coupon_role,</if>
+			<if test="explanation != null  and explanation != '' "> explanation,</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">spare_field1,</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">spare_field2,</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">spare_field3,</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">spare_field4,</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">spare_field5,</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">spare_field6,</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">spare_field7,</if>
+			<if test="spareField8 != null  and spareField8 != ''  ">spare_field8,</if>
+			<if test="spareField9 != null  and spareField9 != ''  ">spare_field9,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="couponId != null  ">#{couponId},</if>
+			<if test="membersId != null  ">#{membersId},</if>
+			<if test="membersType != null  ">#{membersType},</if>
+			<if test="couponType != null  ">#{couponType},</if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">#{effectiveTimeBegin},</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">#{effectiveTimeEnd},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="instructions != null  and instructions != ''  ">#{instructions},</if>
+			<if test="couponCode != null  and couponCode != ''  ">#{couponCode},</if>
+			<if test="couponValues != null  ">#{couponValues},</if>
+			<if test="picUrl != null  and picUrl != '' "> #{picUrl},</if>
+			<if test="couponRole != null ">  #{couponRole},</if>
+			<if test="explanation != null  and explanation != '' ">  #{explanation},</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">#{spareField1},</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">#{spareField2},</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">#{spareField3},</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">#{spareField4},</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">#{spareField7},</if>
+			<if test="spareField8 != null  and spareField8 != ''  ">#{spareField8},</if>
+			<if test="spareField9 != null  and spareField9 != ''  ">#{spareField9},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMyCoupon" parameterType="MyCoupon">
+        update my_coupon
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="couponId != null  ">coupon_id = #{couponId},</if>
+            <if test="membersId != null  ">members_id = #{membersId},</if>
+            <if test="membersType != null  ">members_type = #{membersType},</if>
+            <if test="couponType != null  ">coupon_type = #{couponType},</if>
+            <if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">effective_time_begin = #{effectiveTimeBegin},</if>
+            <if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">effective_time_end = #{effectiveTimeEnd},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="instructions != null  and instructions != ''  ">instructions = #{instructions},</if>
+            <if test="couponCode != null  and couponCode != ''  ">coupon_code = #{couponCode},</if>
+            <if test="couponValues != null  ">coupon_values = #{couponValues},</if>
+            <if test="picUrl != null  and picUrl != '' ">  pic_url = #{picUrl},</if>
+            <if test="couponRole != null ">  coupon_role = #{couponRole},</if>
+            <if test="explanation != null  and explanation != '' "> explanation= #{explanation}</if>
+             <if test="spareField1 != null  and spareField1 != ''  ">spare_field1 = #{spareField1},</if>
+            <if test="spareField2 != null  and spareField2 != ''  ">spare_field2 = #{spareField2},</if>
+            <if test="spareField3 != null  and spareField3 != ''  ">spare_field3 = #{spareField3},</if>
+            <if test="spareField4 != null  and spareField4 != ''  ">spare_field4 = #{spareField4},</if>
+            <if test="spareField5 != null  and spareField5 != ''  ">spare_field5 = #{spareField5},</if>
+            <if test="spareField6 != null  and spareField6 != ''  ">spare_field6 = #{spareField6},</if>
+            <if test="spareField7 != null  and spareField7 != ''  ">spare_field7 = #{spareField7},</if>
+            <if test="spareField8 != null  and spareField8 != ''  ">spare_field8 = #{spareField8},</if>
+            <if test="spareField9 != null  and spareField9 != ''  ">spare_field9 = #{spareField9},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMyCouponById" parameterType="Integer">
+        delete from my_coupon where id = #{id}
+    </delete>
+	
+    <delete id="deleteMyCouponByIds" parameterType="String">
+        delete from my_coupon where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

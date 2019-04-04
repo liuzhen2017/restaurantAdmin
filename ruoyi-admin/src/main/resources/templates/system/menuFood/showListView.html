@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								店名：<input type="text" name="storeName"/>
+							</li>
+							<li>
+								電話：<input type="text" name="phone"/>
+							</li>
+							<li>
+								店长：<input type="text" name="shopkeeper"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+     <script type="text/javascript" src="../../../util.js"></script>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:branchStore:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:branchStore:remove')}]];
+        var prefix = ctx + "system/branchStore";
+        $(function() {
+            var options = {
+                url: prefix + "/showList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "分店管理",
+				search: false,
+		        showExport: true,
+                columns: [
+				{
+					field : 'id', 
+					title : '序號',
+					visible: false
+				},
+				{
+					field : 'storeName', 
+					title : '店名',
+					sortable: true
+				},
+				{
+					field : 'address', 
+					title : '地址',
+					sortable: true
+				},
+				{
+					field : 'phone', 
+					title : '電話',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="selectStore('+row.id+',\'' +row.storeName+ '\')"><i class="fa fa-edit"></i>选择</a> ');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+            
+           
+          
+        });
+        function selectStore(id,name){
+        	 parent.$("#branchStoreId").val(id);
+        	 parent.$("#branchStoreName").val(name);
+        	 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+             parent.layer.close(index); //再执行关闭   ;
+        }
+       
+    </script>
+</body>
+</html>

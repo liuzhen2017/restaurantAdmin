@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-accountFlow-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">賬號：</label>
+				<div class="col-sm-8">
+					<input id="accNo" name="accNo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易類型：</label>
+				<div class="col-sm-8">
+					<input id="tranType" name="tranType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易金額：</label>
+				<div class="col-sm-8">
+					<input id="money" name="money" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易描述：</label>
+				<div class="col-sm-8">
+					<input id="tranDes" name="tranDes" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易之前金額：</label>
+				<div class="col-sm-8">
+					<input id="beforeMoney" name="beforeMoney" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易之后金額：</label>
+				<div class="col-sm-8">
+					<input id="afterMoney" name="afterMoney" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建創建人：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建用戶：</label>
+				<div class="col-sm-8">
+					<input id="createBy" name="createBy" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">會員信息：</label>
+				<div class="col-sm-8">
+					<input id="menuId" name="menuId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">會員賬號：</label>
+				<div class="col-sm-8">
+					<input id="menuAccNo" name="menuAccNo" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/accountFlow"
+		$("#form-accountFlow-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-accountFlow-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ScoreHisMapper">
+    
+    <resultMap type="ScoreHis" id="ScoreHisResult">
+        <result property="id"    column="id"    />
+        <result property="membersId"    column="members_id"    />
+        <result property="membersName"    column="members_name"    />
+        <result property="olbScore"    column="olb_score"    />
+        <result property="newScore"    column="new_score"    />
+        <result property="describes"    column="describes"    />
+        <result property="createdDate"    column="created_date"    />
+    </resultMap>
+	
+	<sql id="selectScoreHisVo">
+        select id, members_id, members_name, olb_score, new_score, describes, created_date from score_his
+    </sql>
+	
+    <select id="selectScoreHisList" parameterType="ScoreHis" resultMap="ScoreHisResult">
+        <include refid="selectScoreHisVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="membersId != null "> and members_id = #{membersId}</if>
+             <if test="membersName != null  and membersName != '' "> and members_name = #{membersName}</if>
+             <if test="olbScore != null "> and olb_score = #{olbScore}</if>
+             <if test="newScore != null "> and new_score = #{newScore}</if>
+             <if test="describes != null  and describes != '' "> and describes = #{describes}</if>
+             <if test="createdDate != null "> and created_date = #{createdDate}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectScoreHisById" parameterType="Integer" resultMap="ScoreHisResult">
+        <include refid="selectScoreHisVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScoreHis" parameterType="ScoreHis" useGeneratedKeys="true" keyProperty="id">
+        insert into score_his
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="membersId != null  ">members_id,</if>
+			<if test="membersName != null  and membersName != ''  ">members_name,</if>
+			<if test="olbScore != null  ">olb_score,</if>
+			<if test="newScore != null  ">new_score,</if>
+			<if test="describes != null  and describes != ''  ">describes,</if>
+			<if test="createdDate != null  ">created_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="membersId != null  ">#{membersId},</if>
+			<if test="membersName != null  and membersName != ''  ">#{membersName},</if>
+			<if test="olbScore != null  ">#{olbScore},</if>
+			<if test="newScore != null  ">#{newScore},</if>
+			<if test="describes != null  and describes != ''  ">#{describes},</if>
+			<if test="createdDate != null  ">#{createdDate},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateScoreHis" parameterType="ScoreHis">
+        update score_his
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="membersId != null  ">members_id = #{membersId},</if>
+            <if test="membersName != null  and membersName != ''  ">members_name = #{membersName},</if>
+            <if test="olbScore != null  ">olb_score = #{olbScore},</if>
+            <if test="newScore != null  ">new_score = #{newScore},</if>
+            <if test="describes != null  and describes != ''  ">describes = #{describes},</if>
+            <if test="createdDate != null  ">created_date = #{createdDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteScoreHisById" parameterType="Integer">
+        delete from score_his where id = #{id}
+    </delete>
+	
+    <delete id="deleteScoreHisByIds" parameterType="String">
+        delete from score_his where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

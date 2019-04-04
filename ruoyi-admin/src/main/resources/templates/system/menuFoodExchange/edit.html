@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-menuFoodExchange-edit" th:object="${menuFoodExchange}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">菜品ID：</label>
+				<div class="col-sm-8">
+					<input id="menuFoodId" name="menuFoodId" th:field="*{menuFoodId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">菜品名稱：</label>
+				<div class="col-sm-8">
+					<input id="menuFoodName" name="menuFoodName" th:field="*{menuFoodName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">菜品圖片：</label>
+				<div class="col-sm-8">
+					<input id="menuFoodPic" name="menuFoodPic" th:field="*{menuFoodPic}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">会员ID：</label>
+				<div class="col-sm-8">
+					<input id="membersId" name="membersId" th:field="*{membersId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">会员姓名：</label>
+				<div class="col-sm-8">
+					<input id="menbersName" name="menbersName" th:field="*{menbersName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">使用積分：</label>
+				<div class="col-sm-8">
+					<input id="scord" name="scord" th:field="*{scord}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建日期：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券编号：</label>
+				<div class="col-sm-8">
+					<input id="couponId" name="couponId" th:field="*{couponId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">0優惠券  1优惠代码：</label>
+				<div class="col-sm-8">
+					<input id="couponType" name="couponType" th:field="*{couponType}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/menuFoodExchange";
+		$("#form-menuFoodExchange-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-menuFoodExchange-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

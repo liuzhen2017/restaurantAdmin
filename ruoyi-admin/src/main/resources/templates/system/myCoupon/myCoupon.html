@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId" th:object="${mycoupon}">
+					<div class="select-list">
+						<ul>
+						<li>有效狀態： <select name="isVaild">
+									<option value="">請選擇</option>
+									<option value="yes">有效</option>
+									<option value="no">無效</option>
+							</select>
+							<li>
+							<li>状态： <select name="status">
+									<option value="">請選擇</option>
+									<option value="0">未发放</option>
+									<option value="1">已发放</option>
+									<option value="2">未领取</option>
+									<option value="3">已领取</option>
+									<option value="4">已使用</option>
+									<option value="5">已过期</option>
+							</select>
+							<li><input type="hidden" name="couponId"  th:value=*{couponId}></li>
+							</li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:myCoupon:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:myCoupon:remove')}]];
+        var prefix = ctx + "system/myCoupon";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "我的優惠券",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序號',
+				},
+				{
+					field : 'title', 
+					title : '優惠券標題',
+					sortable: true
+				},
+				{
+					field : 'membersType', 
+					title : '目标会员類型',
+					formatter: function(value, row, index) {
+                    	if(value =="0"){
+                    		return  "普通会员";
+                    	}else if(value ==1){
+                    	    return "VIP会员";
+                    	}
+                    	return "未知类型";
+                    }
+				},
+				{
+					field : 'couponType', 
+					title : '優惠券類型',
+					formatter: function(value, row, index) {
+						if(value =="0"){
+	                		return  "折扣类型";
+	                	}else if(value ==1){
+	                	    return "优惠代码";
+	                	}else if(value ==2){
+	                	    return "注册赠送";
+	                	}else if(value ==3){
+	                	    return "購買VIP優惠";
+	                	}
+                		return "未知类型";
+					}
+				},
+				{
+					field : 'couponCode', 
+					title : '優惠代碼'
+				},
+				{
+					field : 'effectiveTimeBegin', 
+					title : '優惠券有效日期',
+					sortable: true
+				},
+				{
+					field : 'effectiveTimeEnd', 
+					title : '優惠券失效日期',
+				},
+				{
+					field : 'createDate', 
+					title : '創建日期',
+				},
+				{
+					field : 'status', 
+					title : '状态',
+					formatter: function(value, row, index) {
+					if(value =="0"){
+                		return  "未发放";
+                	}else if(value ==1){
+                	    return "已发放";
+                	}else if(value ==2){
+                	    return "未领取";
+                	}else if(value ==3){
+                	    return "已领取";
+                	}else if(value ==4){
+                	    return "已使用";
+                	}else if(value ==5){
+                	    return "已过期";
+                	}
+                	 return "未知状态";
+					}
+				},
+				{
+					field : 'membersId', 
+					title : '會員ID',
+				},
+				{
+					field : 'isVaild', 
+					title : '是否有效',
+					formatter: function(value, row, index) {
+                    	if(value =="yes"){
+                    		return  "有效";
+                    	}
+                    	return "無效";
+                    }
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	if(row.isVaild=='yes'){
+		                	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="settingVaild(\'' + row.id + '\')"><i class="fa fa-edit"></i>設置為失效</a> ');
+		                	
+		            	}else{
+		            		actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="settingVaild(\'' + row.id + '\')"><i class="fa fa-edit"></i>設置為生效</a> ');
+		            	}
+		            	return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+            $.table.search();
+        });
+        function settingVaild(id){
+           if(id){
+        	   $.ajax({
+        			type : "POST",
+        			async:false,
+        			url : "/system/myCoupon/settingVaild",
+        			data : {id:id},
+        			type : "post",
+        			success : function(result) {
+        				if (result.code == web_status.SUCCESS) {
+        					$.table.search();
+        				} else {
+        					$.modal.alertError(result.msg);
+        				}
+        			},
+        			error : function(error) {
+
+        			}
+        		});
+           }	
+        }
+        
+    </script>
+</body>
+</html>

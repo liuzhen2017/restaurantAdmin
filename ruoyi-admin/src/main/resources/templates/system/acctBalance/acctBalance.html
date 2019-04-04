@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								賬號：<input type="text" name="accNo"/>
+							</li>
+
+							<li>
+								賬戶類型：
+								<select name="accType">
+									<option value="">請選擇</option>
+									<option value="0">系統賬戶</option>
+								</select>
+							</li>
+
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<!-- 
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:acctBalance:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:acctBalance:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+			</div> -->
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:acctBalance:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:acctBalance:remove')}]];
+        var prefix = ctx + "system/acctBalance";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "賬戶餘額",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序號',
+					visible: false
+				},
+				{
+					field : 'accNo', 
+					title : '賬號',
+					sortable: true
+				},
+				{
+					field : 'accType', 
+					title : '賬戶類型',
+					formatter: function(value, row, index) {
+                    	if(value =="0"){
+                    		return  "系統賬戶";
+                    	}
+                    }
+				},
+				{
+					field : 'canBalance', 
+					title : '可用餘額',
+					sortable: true
+				},
+				{
+					field : 'freezingBalance', 
+					title : '凍結金額',
+					sortable: true
+				},
+				{
+					field : 'createDate', 
+					title : '創建日期',
+					sortable: true
+				},
+				{
+					field : 'createBy', 
+					title : '創建用戶',
+					sortable: true
+				},
+				{
+					field : 'updataDate', 
+					title : '修改日期',
+					sortable: true
+				},
+				{
+					field : 'updateBy', 
+					title : '修改用戶',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	
+						return '';
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

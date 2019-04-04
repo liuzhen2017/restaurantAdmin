@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MenuFoodMapper">
+    
+   <resultMap type="MenuFood" id="MenuFoodResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="describes"    column="describes"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="typess"    column="typess"    />
+        <result property="typeName"    column="type_name"    />
+        <result property="price"    column="price"    />
+        <result property="exchangePointsScord"    column="exchange_points_scord"    />
+        <result property="isHot"    column="is_hot"    />
+        <result property="isValid"    column="is_valid"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="isSellOut"    column="is_sell_out"    />
+        <result property="branchStoreId"    column="branch_store_id"    />
+        <result property="isExchange"    column="is_exchange"    />
+        <result property="takeEffectDate"    column="take_effect_date"    />
+        <result property="invalidDate"    column="invalid_date"    />
+        <result property="effectiveDay"    column="effective_day"    />
+        <result property="totalNums"    column="total_Nums"    />
+        <result property="usedNums"    column="used_Nums"    />
+        <result property="name"    column="name"    />
+        <result property="rulesType"    column="rules_type"    />
+        <result property="spareField1"    column="spare_field1"    />
+        <result property="spareField2"    column="spare_field2"    />
+        <result property="spareField3"    column="spare_field3"    />
+        <result property="spareField4"    column="spare_field4"    />
+        <result property="spareField5"    column="spare_field5"    />
+        <result property="spareField6"    column="spare_field6"    />
+        <result property="spareField7"    column="spare_field7"    />
+    </resultMap>
+	
+	<sql id="selectMenuFoodVo">
+        select id, title, describes, pic_url, typess, type_name, price, exchange_points_scord, is_hot, is_valid, create_date, is_sell_out, branch_store_id, is_exchange, take_effect_date, invalid_date, effective_day, total_Nums, used_Nums, name, rules_type, spare_field1, spare_field2, spare_field3, spare_field4, spare_field5, spare_field6, spare_field7 from menu_food
+    </sql>
+	
+    <select id="selectMenuFoodList" parameterType="MenuFood" resultMap="MenuFoodResult">
+        <include refid="selectMenuFoodVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="describes != null  and describes != '' "> and describes = #{describes}</if>
+             <if test="picUrl != null  and picUrl != '' "> and pic_url = #{picUrl}</if>
+             <if test="typess != null "> and typess = #{typess}</if>
+             <if test="typeName != null  and typeName != '' "> and type_name = #{typeName}</if>
+             <if test="price != null "> and price = #{price}</if>
+             <if test="exchangePointsScord != null "> and exchange_points_scord = #{exchangePointsScord}</if>
+             <if test="isHot != null  and isHot != '' "> and is_hot = #{isHot}</if>
+             <if test="isValid != null  and isValid != '' "> and is_valid = #{isValid}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="isSellOut != null  and isSellOut != '' "> and is_sell_out = #{isSellOut}</if>
+             <if test="branchStoreId != null "> and branch_store_id = #{branchStoreId}</if>
+             <if test="isExchange != null  and isExchange != '' "> and is_exchange = #{isExchange}</if>
+             <if test="takeEffectDate != null  and takeEffectDate != '' "> and take_effect_date = #{takeEffectDate}</if>
+             <if test="invalidDate != null  and invalidDate != '' "> and invalid_date = #{invalidDate}</if>
+             <if test="effectiveDay != null "> and effective_day = #{effectiveDay}</if>
+             <if test="totalNums != null "> and total_Nums = #{totalNums}</if>
+             <if test="usedNums != null "> and used_Nums = #{usedNums}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="rulesType != null "> and rules_type = #{rulesType}</if>
+             <if test="spareField1 != null  and spareField1 != '' "> and spare_field1 = #{spareField1}</if>
+             <if test="spareField2 != null  and spareField2 != '' "> and spare_field2 = #{spareField2}</if>
+             <if test="spareField3 != null  and spareField3 != '' "> and spare_field3 = #{spareField3}</if>
+             <if test="spareField4 != null  and spareField4 != '' "> and spare_field4 = #{spareField4}</if>
+             <if test="spareField5 != null  and spareField5 != '' "> and spare_field5 = #{spareField5}</if>
+             <if test="spareField6 != null  and spareField6 != '' "> and spare_field6 = #{spareField6}</if>
+             <if test="spareField7 != null  and spareField7 != '' "> and spare_field7 = #{spareField7}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectMenuFoodById" parameterType="Integer" resultMap="MenuFoodResult">
+        <include refid="selectMenuFoodVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMenuFood" parameterType="MenuFood" useGeneratedKeys="true" keyProperty="id">
+        insert into menu_food
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="describes != null  and describes != ''  ">describes,</if>
+			<if test="picUrl != null  and picUrl != ''  ">pic_url,</if>
+			<if test="typess != null  ">typess,</if>
+			<if test="typeName != null  and typeName != ''  ">type_name,</if>
+			<if test="price != null  ">price,</if>
+			<if test="exchangePointsScord != null  ">exchange_points_scord,</if>
+			<if test="isHot != null  and isHot != ''  ">is_hot,</if>
+			<if test="isValid != null  and isValid != ''  ">is_valid,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="isSellOut != null  and isSellOut != ''  ">is_sell_out,</if>
+			<if test="branchStoreId != null  ">branch_store_id,</if>
+			<if test="isExchange != null  and isExchange != ''  ">is_exchange,</if>
+			<if test="takeEffectDate != null  and takeEffectDate != ''  ">take_effect_date,</if>
+			<if test="invalidDate != null  and invalidDate != ''  ">invalid_date,</if>
+			<if test="effectiveDay != null  ">effective_day,</if>
+			<if test="totalNums != null  ">total_Nums,</if>
+			<if test="usedNums != null  ">used_Nums,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="rulesType != null  ">rules_type,</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">spare_field1,</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">spare_field2,</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">spare_field3,</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">spare_field4,</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">spare_field5,</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">spare_field6,</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">spare_field7,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="describes != null  and describes != ''  ">#{describes},</if>
+			<if test="picUrl != null  and picUrl != ''  ">#{picUrl},</if>
+			<if test="typess != null  ">#{typess},</if>
+			<if test="typeName != null  and typeName != ''  ">#{typeName},</if>
+			<if test="price != null  ">#{price},</if>
+			<if test="exchangePointsScord != null  ">#{exchangePointsScord},</if>
+			<if test="isHot != null  and isHot != ''  ">#{isHot},</if>
+			<if test="isValid != null  and isValid != ''  ">#{isValid},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="isSellOut != null  and isSellOut != ''  ">#{isSellOut},</if>
+			<if test="branchStoreId != null  ">#{branchStoreId},</if>
+			<if test="isExchange != null  and isExchange != ''  ">#{isExchange},</if>
+			<if test="takeEffectDate != null  and takeEffectDate != ''  ">#{takeEffectDate},</if>
+			<if test="invalidDate != null  and invalidDate != ''  ">#{invalidDate},</if>
+			<if test="effectiveDay != null  ">#{effectiveDay},</if>
+			<if test="totalNums != null  ">#{totalNums},</if>
+			<if test="usedNums != null  ">#{usedNums},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="rulesType != null  ">#{rulesType},</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">#{spareField1},</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">#{spareField2},</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">#{spareField3},</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">#{spareField4},</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
+			<if test="spareField7 != null  and spareField7 != ''  ">#{spareField7},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMenuFood" parameterType="MenuFood">
+        update menu_food
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="describes != null  and describes != ''  ">describes = #{describes},</if>
+            <if test="picUrl != null  and picUrl != ''  ">pic_url = #{picUrl},</if>
+            <if test="typess != null  ">typess = #{typess},</if>
+            <if test="typeName != null  and typeName != ''  ">type_name = #{typeName},</if>
+            <if test="price != null  ">price = #{price},</if>
+            <if test="exchangePointsScord != null  ">exchange_points_scord = #{exchangePointsScord},</if>
+            <if test="isHot != null  and isHot != ''  ">is_hot = #{isHot},</if>
+            <if test="isValid != null  and isValid != ''  ">is_valid = #{isValid},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="isSellOut != null  and isSellOut != ''  ">is_sell_out = #{isSellOut},</if>
+            <if test="branchStoreId != null  ">branch_store_id = #{branchStoreId},</if>
+            <if test="isExchange != null  and isExchange != ''  ">is_exchange = #{isExchange},</if>
+            <if test="takeEffectDate != null  and takeEffectDate != ''  ">take_effect_date = #{takeEffectDate},</if>
+            <if test="invalidDate != null  and invalidDate != ''  ">invalid_date = #{invalidDate},</if>
+            <if test="effectiveDay != null  ">effective_day = #{effectiveDay},</if>
+            <if test="totalNums != null  ">total_Nums = #{totalNums},</if>
+            <if test="usedNums != null  ">used_Nums = #{usedNums},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="rulesType != null  ">rules_type = #{rulesType},</if>
+            <if test="spareField1 != null  and spareField1 != ''  ">spare_field1 = #{spareField1},</if>
+            <if test="spareField2 != null  and spareField2 != ''  ">spare_field2 = #{spareField2},</if>
+            <if test="spareField3 != null  and spareField3 != ''  ">spare_field3 = #{spareField3},</if>
+            <if test="spareField4 != null  and spareField4 != ''  ">spare_field4 = #{spareField4},</if>
+            <if test="spareField5 != null  and spareField5 != ''  ">spare_field5 = #{spareField5},</if>
+            <if test="spareField6 != null  and spareField6 != ''  ">spare_field6 = #{spareField6},</if>
+            <if test="spareField7 != null  and spareField7 != ''  ">spare_field7 = #{spareField7},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMenuFoodById" parameterType="Integer">
+        delete from menu_food where id = #{id}
+    </delete>
+	
+    <delete id="deleteMenuFoodByIds" parameterType="String">
+        delete from menu_food where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ShowAdveMapper">
+    
+    <resultMap type="ShowAdve" id="ShowAdveResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="invalidDate"    column="invalid_date"    />
+        <result property="takeEffectDate"    column="take_effect_date"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="linkUrl"    column="link_url"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="spareField1"    column="spare_field1"    />
+        <result property="spareField2"    column="spare_field2"    />
+        <result property="spareField3"    column="spare_field3"    />
+        <result property="spareField4"    column="spare_field4"    />
+        <result property="spareField5"    column="spare_field5"    />
+        <result property="spareField6"    column="spare_field6"    />
+    </resultMap>
+	
+	<sql id="selectShowAdveVo">
+        select id, title, invalid_date, take_effect_date, pic_url, link_url, is_vaild, spare_field1, spare_field2, spare_field3, spare_field4, spare_field5, spare_field6 from show_adve
+    </sql>
+	
+    <select id="selectShowAdveList" parameterType="ShowAdve" resultMap="ShowAdveResult">
+        <include refid="selectShowAdveVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="invalidDate != null  and invalidDate != '' "> and invalid_date = #{invalidDate}</if>
+             <if test="takeEffectDate != null  and takeEffectDate != '' "> and take_effect_date = #{takeEffectDate}</if>
+             <if test="picUrl != null  and picUrl != '' "> and pic_url = #{picUrl}</if>
+             <if test="linkUrl != null  and linkUrl != '' "> and link_url = #{linkUrl}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="spareField1 != null  and spareField1 != '' "> and spare_field1 = #{spareField1}</if>
+             <if test="spareField2 != null  and spareField2 != '' "> and spare_field2 = #{spareField2}</if>
+             <if test="spareField3 != null  and spareField3 != '' "> and spare_field3 = #{spareField3}</if>
+             <if test="spareField4 != null  and spareField4 != '' "> and spare_field4 = #{spareField4}</if>
+             <if test="spareField5 != null  and spareField5 != '' "> and spare_field5 = #{spareField5}</if>
+             <if test="spareField6 != null  and spareField6 != '' "> and spare_field6 = #{spareField6}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectShowAdveById" parameterType="Integer" resultMap="ShowAdveResult">
+        <include refid="selectShowAdveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertShowAdve" parameterType="ShowAdve" useGeneratedKeys="true" keyProperty="id">
+        insert into show_adve
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="invalidDate != null  and invalidDate != ''  ">invalid_date,</if>
+			<if test="takeEffectDate != null  and takeEffectDate != ''  ">take_effect_date,</if>
+			<if test="picUrl != null  and picUrl != ''  ">pic_url,</if>
+			<if test="linkUrl != null  and linkUrl != ''  ">link_url,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">spare_field1,</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">spare_field2,</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">spare_field3,</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">spare_field4,</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">spare_field5,</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">spare_field6,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="invalidDate != null  and invalidDate != ''  ">#{invalidDate},</if>
+			<if test="takeEffectDate != null  and takeEffectDate != ''  ">#{takeEffectDate},</if>
+			<if test="picUrl != null  and picUrl != ''  ">#{picUrl},</if>
+			<if test="linkUrl != null  and linkUrl != ''  ">#{linkUrl},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="spareField1 != null  and spareField1 != ''  ">#{spareField1},</if>
+			<if test="spareField2 != null  and spareField2 != ''  ">#{spareField2},</if>
+			<if test="spareField3 != null  and spareField3 != ''  ">#{spareField3},</if>
+			<if test="spareField4 != null  and spareField4 != ''  ">#{spareField4},</if>
+			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
+			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateShowAdve" parameterType="ShowAdve">
+        update show_adve
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="invalidDate != null  and invalidDate != ''  ">invalid_date = #{invalidDate},</if>
+            <if test="takeEffectDate != null  and takeEffectDate != ''  ">take_effect_date = #{takeEffectDate},</if>
+            <if test="picUrl != null  and picUrl != ''  ">pic_url = #{picUrl},</if>
+            <if test="linkUrl != null  and linkUrl != ''  ">link_url = #{linkUrl},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="spareField1 != null  and spareField1 != ''  ">spare_field1 = #{spareField1},</if>
+            <if test="spareField2 != null  and spareField2 != ''  ">spare_field2 = #{spareField2},</if>
+            <if test="spareField3 != null  and spareField3 != ''  ">spare_field3 = #{spareField3},</if>
+            <if test="spareField4 != null  and spareField4 != ''  ">spare_field4 = #{spareField4},</if>
+            <if test="spareField5 != null  and spareField5 != ''  ">spare_field5 = #{spareField5},</if>
+            <if test="spareField6 != null  and spareField6 != ''  ">spare_field6 = #{spareField6},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteShowAdveById" parameterType="Integer">
+        delete from show_adve where id = #{id}
+    </delete>
+	
+    <delete id="deleteShowAdveByIds" parameterType="String">
+        delete from show_adve where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

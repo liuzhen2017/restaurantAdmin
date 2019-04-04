@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-acctBalance-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">賬號：</label>
+				<div class="col-sm-8">
+					<input id="accNo" name="accNo" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">賬戶類型：</label>
+				<div class="col-sm-8">
+					<input id="accType" name="accType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">可用餘額：</label>
+				<div class="col-sm-8">
+					<input id="canBalance" name="canBalance" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">凍結金額：</label>
+				<div class="col-sm-8">
+					<input id="freezingBalance" name="freezingBalance" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建日期：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建用戶：</label>
+				<div class="col-sm-8">
+					<input id="createBy" name="createBy" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">修改日期：</label>
+				<div class="col-sm-8">
+					<input id="updataDate" name="updataDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">修改用戶：</label>
+				<div class="col-sm-8">
+					<input id="updateBy" name="updateBy" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/acctBalance"
+		$("#form-acctBalance-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-acctBalance-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

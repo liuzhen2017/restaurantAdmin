@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-order-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易渠道：</label>
+				<div class="col-sm-8">
+					<input id="payChannel" name="payChannel" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">購買VIP會員：</label>
+				<div class="col-sm-8">
+					<input id="orderDesc" name="orderDesc" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易唯一碼,交易渠道返回：</label>
+				<div class="col-sm-8">
+					<input id="token" name="token" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">支付賬號：</label>
+				<div class="col-sm-8">
+					<input id="email" name="email" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">貨幣央視：</label>
+				<div class="col-sm-8">
+					<input id="currency" name="currency" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易金額：</label>
+				<div class="col-sm-8">
+					<input id="ammount" name="ammount" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易用戶ID：</label>
+				<div class="col-sm-8">
+					<input id="tranUser" name="tranUser" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易用戶名稱：</label>
+				<div class="col-sm-8">
+					<input id="tranUserName" name="tranUserName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易用戶電話：</label>
+				<div class="col-sm-8">
+					<input id="tranUserPhone" name="tranUserPhone" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易狀態，交易渠道返回：</label>
+				<div class="col-sm-8">
+					<input id="tranStatus" name="tranStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">交易結果返回：</label>
+				<div class="col-sm-8">
+					<input id="tranMsg" name="tranMsg" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建時間：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建人：</label>
+				<div class="col-sm-8">
+					<input id="createBy" name="createBy" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/order"
+		$("#form-order-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-order-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MembersMapper">
+    
+      <resultMap type="Members" id="MembersResult">
+        <result property="id"    column="id"    />
+        <result property="email"    column="email"    />
+        <result property="pwd"    column="pwd"    />
+        <result property="name"    column="name"    />
+        <result property="region"    column="region"    />
+        <result property="sex"    column="sex"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="score"    column="score"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="membersType"    column="members_type"    />
+        <result property="upgradeDate"    column="upgrade_date"    />
+        <result property="vipDate"    column="vip_date"    />
+        <result property="salt"    column="salt"    />
+        <result property="phone"    column="phone"    />
+        <result property="code"    column="code"    />
+        <result property="isSend"    column="is_send"    />
+        <result property="isTis"    column="is_tis"    />
+    </resultMap>
+	
+	<sql id="selectMembersVo">
+        select id, email, pwd, name, region, sex, birthday, score, is_vaild, create_date, members_type, upgrade_date, vip_date, salt, phone, code, is_send, is_tis from members
+    </sql>
+	
+    <select id="selectMembersList" parameterType="Members" resultMap="MembersResult">
+        <include refid="selectMembersVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="pwd != null  and pwd != '' "> and pwd = #{pwd}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="region != null  and region != '' "> and region = #{region}</if>
+             <if test="sex != null "> and sex = #{sex}</if>
+             <if test="birthday != null  and birthday != '' "> and birthday = #{birthday}</if>
+             <if test="score != null "> and score = #{score}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="createDate != null  and createDate != '' "> and create_date = #{createDate}</if>
+             <if test="membersType != null "> and members_type = #{membersType}</if>
+             <if test="upgradeDate != null  and upgradeDate != '' "> and upgrade_date = #{upgradeDate}</if>
+             <if test="vipDate != null  and vipDate != '' "> and vip_date = #{vipDate}</if>
+             <if test="salt != null  and salt != '' "> and salt = #{salt}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="isSend != null  and isSend != '' "> and is_send = #{isSend}</if>
+             <if test="isTis != null  and isTis != '' "> and is_tis = #{isTis}</if>
+         </where>
+		  order by id desc
+    </select>
+    
+    <select id="selectMembersById" parameterType="Integer" resultMap="MembersResult">
+        <include refid="selectMembersVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMembers" parameterType="Members" useGeneratedKeys="true" keyProperty="id">
+        insert into members
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="pwd != null  and pwd != ''  ">pwd,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="region != null  and region != ''  ">region,</if>
+			<if test="sex != null  ">sex,</if>
+			<if test="birthday != null  and birthday != ''  ">birthday,</if>
+			<if test="score != null  ">score,</if>
+			<if test="isVaild != null  and isVaild != ''  ">is_vaild,</if>
+			<if test="createDate != null  and createDate != ''  ">create_date,</if>
+			<if test="membersType != null  ">members_type,</if>
+			<if test="upgradeDate != null  and upgradeDate != ''  ">upgrade_date,</if>
+			<if test="vipDate != null  and vipDate != ''  ">vip_date,</if>
+			<if test="salt != null  and salt != ''  ">salt,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="isSend != null  and isSend != ''  ">is_send,</if>
+			<if test="isTis != null  and isTis != ''  ">is_tis,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="pwd != null  and pwd != ''  ">#{pwd},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="region != null  and region != ''  ">#{region},</if>
+			<if test="sex != null  ">#{sex},</if>
+			<if test="birthday != null  and birthday != ''  ">#{birthday},</if>
+			<if test="score != null  ">#{score},</if>
+			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
+			<if test="createDate != null  and createDate != ''  ">#{createDate},</if>
+			<if test="membersType != null  ">#{membersType},</if>
+			<if test="upgradeDate != null  and upgradeDate != ''  ">#{upgradeDate},</if>
+			<if test="vipDate != null  and vipDate != ''  ">#{vipDate},</if>
+			<if test="salt != null  and salt != ''  ">#{salt},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="isSend != null  and isSend != ''  ">#{isSend},</if>
+			<if test="isTis != null  and isTis != ''  ">#{isTis},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMembers" parameterType="Members">
+        update members
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="pwd != null  and pwd != ''  ">pwd = #{pwd},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="region != null  and region != ''  ">region = #{region},</if>
+            <if test="sex != null  ">sex = #{sex},</if>
+            <if test="birthday != null  and birthday != ''  ">birthday = #{birthday},</if>
+            <if test="score != null  ">score = #{score},</if>
+            <if test="isVaild != null  and isVaild != ''  ">is_vaild = #{isVaild},</if>
+            <if test="createDate != null  and createDate != ''  ">create_date = #{createDate},</if>
+            <if test="membersType != null  ">members_type = #{membersType},</if>
+            <if test="upgradeDate != null  and upgradeDate != ''  ">upgrade_date = #{upgradeDate},</if>
+            <if test="vipDate != null  and vipDate != ''  ">vip_date = #{vipDate},</if>
+            <if test="salt != null  and salt != ''  ">salt = #{salt},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="isSend != null  and isSend != ''  ">is_send = #{isSend},</if>
+            <if test="isTis != null  and isTis != ''  ">is_tis = #{isTis},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteMembersById" parameterType="Integer">
+        delete from members where id = #{id}
+    </delete>
+	
+    <delete id="deleteMembersByIds" parameterType="String">
+        delete from members where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    
+    <!-- append begin  -->
+     <select id="selectMembersByKey" parameterType="Map" resultMap="MembersResult">
+        <include refid="selectMembersVo"/>
+        where #{key} =#{value}
+    </select>
+    
+     <select id="selectGrantList" parameterType="Members" resultMap="MembersResult">
+       select m.id, m.email, m.pwd, m.name, m.region, m.sex, m.birthday, m.score, m.is_vaild, m.create_date, m.members_type, m.upgrade_date, m.vip_date,m.salt,m.code 
+        from members m 
+        
+        where 1 =1
+         <if test="membersType != null "> and m.members_type = #{membersType}</if>
+         <if test="isVaild != null  and isVaild != '' "> and m.is_vaild = #{isVaild}</if>
+        and m.id not in(
+	          SELECT IFNULL(c.`members_id`,'0000') FROM my_coupon c
+	 			WHERE c.`coupon_id` =#{couponId}
+        )
+    </select>
+    
+     <select id="selectMembersByIds" parameterType="Members" resultMap="MembersResult">
+        <include refid="selectMembersVo"/>
+        where id in 
+       	<foreach collection="list" item="id" open="(" separator="," close=")">
+		#{id}
+	</foreach>
+    </select>
+    <!-- append end  -->
+</mapper>

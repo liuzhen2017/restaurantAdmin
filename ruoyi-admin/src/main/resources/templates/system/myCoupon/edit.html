@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-myCoupon-edit" th:object="${myCoupon}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券標題：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" th:field="*{title}" class="form-control" type="text">
+				</div>
+			</div>
+			<!-- <div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券ID：</label>
+				<div class="col-sm-8">
+					<input id="couponId" name="couponId" th:field="*{couponId}" class="form-control" type="text">
+				</div>
+			</div> -->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">会员ID：</label>
+				<div class="col-sm-8">
+					<input id="membersId" name="membersId" th:field="*{membersId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">目標会员類型：</label>
+				<div class="col-sm-8">
+					 <select name="membersType" disabled="disabled" th:field="*{membersType}">
+									<option value="0">普通會員</option>
+									<option value="1">VIP會員</option>
+									<option value="2">通用</option>
+							</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券類型：</label>
+				<div class="col-sm-8">
+						<select name="couponType" disabled="disabled" readonly="readonly" th:field="*{couponType}">
+					   <!-- <option value="0">滿減</option> -->
+					  <option value="1">打折</option>
+					  <option value="2">注册赠送</option>
+					  <option value="3">購買VIP</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券有效日期：</label>
+				<div class="col-sm-8">
+					<input id="effectiveTimeBegin" readonly="readonly" name="effectiveTimeBegin" th:field="*{effectiveTimeBegin}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">優惠券失效日期：</label>
+				<div class="col-sm-8">
+					<input readonly="readonly" id="effectiveTimeEnd" name="effectiveTimeEnd" th:field="*{effectiveTimeEnd}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">注銷?：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+                         <input type="checkbox" th:checked="${myCoupon.isVaild == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isValid" name="isValid">
+                         <label class="onoffswitch-label" for="isValid">
+                             <span class="onoffswitch-inner"></span>
+                             <span class="onoffswitch-switch"></span>
+                         </label>
+                     </div>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/myCoupon";
+		$("#form-myCoupon-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-myCoupon-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-showAdve-edit" th:object="${showAdve}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">標題：</label>
+				<div class="col-sm-8">
+					<input id="title" name="title" th:field="*{title}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">生效時間：</label>
+				<div class="col-sm-8">
+					<input id="takeEffectDate" name="takeEffectDate" th:field="*{takeEffectDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">失效時間：</label>
+				<div class="col-sm-8">
+					<input id="invalidDate" name="invalidDate" th:field="*{invalidDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">图片地址：</label>
+				<div class="col-sm-8">
+				    <input id="file" name="file" class="form-control" type="file">
+					<input id="picUrl" name="picUrl" th:field="*{picUrl}" type="hidden">
+				    <a href="javascript:void(0)" onclick='openImg(document.getElementById("picUrl").value)'>查看圖片 </a>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">跳轉地址：</label>
+				<div class="col-sm-8">
+					<input id="linkUrl" name="linkUrl" th:field="*{linkUrl}" class="form-control" type="text">
+					<a href='document.getElementById("picUrl").value' target="_blank">点击跳转 </a>
+				</div>
+			</div>
+			<div class="form-group">	
+				<div class="form-group">	
+				<label class="col-sm-3 control-label">是否有效：</label>
+				<div class="col-sm-8">
+					<div class="onoffswitch">
+                         <input type="checkbox" th:checked="${showAdve.isVaild == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isVaild" name="isVaild">
+                          <label class="onoffswitch-label" for="isVaild"> <span
+							class="onoffswitch-inner" id="choiseYes"></span> <span
+							class="onoffswitch-switch" id="choiseNo" ></span>
+						</label>
+                     </div>
+				</div>
+			   </div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" src="../../../util.js"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "system/showAdve";
+		layui.use('laydate', function() {
+	        var laydate = layui.laydate;
+	        laydate.render({
+	        	  elem: '#takeEffectDate'
+	        	  ,type: 'datetime'
+	           	  ,lang: 'en'
+	        	});
+	        laydate.render({
+	      	  elem: '#invalidDate'
+	      	  ,type: 'datetime'
+	      	  ,lang: 'en'
+	      	  
+	      	});
+	        var startDate = laydate.render({
+	            elem: '#takeEffectDate',
+	            max: $('#invalidDate').val(),
+	            theme: 'molv',
+	            trigger: 'click',
+	            type : 'datetime',
+	            done: function(value, date) {
+	                // 结束时间大于开始时间
+	                if (value !== '') {
+	                    endDate.config.min.year = date.year;
+	                    endDate.config.min.month = date.month - 1;
+	                    endDate.config.min.date = date.date;
+	                } else {
+	                    endDate.config.min.year = '';
+	                    endDate.config.min.month = '';
+	                    endDate.config.min.date = '';
+	                }
+	            }
+	        });
+	        var endDate = laydate.render({
+	            elem: '#invalidDate',
+	            min: $('#takeEffectDate').val(),
+	            theme: 'molv',
+	            trigger: 'click',
+	            type : 'datetime',
+	            done: function(value, date) {
+	                // 开始时间小于结束时间
+	                if (value !== '') {
+	                    startDate.config.max.year = date.year;
+	                    startDate.config.max.month = date.month - 1;
+	                    startDate.config.max.date = date.date;
+	                } else {
+	                    startDate.config.max.year = '';
+	                    startDate.config.max.month = '';
+	                    startDate.config.max.date = '';
+	                }
+	            }
+	        });
+	    });
+	    
+			var prefix = ctx + "system/showAdve"
+			$("#form-showAdve-add").validate({
+				rules:{
+					title:{
+						required:true,
+					},
+					takeEffectDate:{
+						required:true,
+					},
+					invalidDate:{
+						required:true,
+					},
+					linkUrl:{
+						required:true,
+					},
+				}
+			});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	        	 var url =uploadFile();;
+	        	if(url){
+  		        	$("#picUrl").val(url);
+	        	}
+	            $.operate.save(prefix + "/edit", $('#form-showAdve-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

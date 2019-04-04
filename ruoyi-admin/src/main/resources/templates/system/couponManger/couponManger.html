@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>標題：<input type="text" name="title" />
+							</li>
+
+							<li>優惠券類型: <select name="couponType">
+									<option value="">請選擇</option>
+									<option value="0">優惠代碼</option>
+									<option value="1">優惠券</option>
+									<option value="2">注册赠送</option>
+							</select>
+							</li>
+
+							<li>优惠券場景： <select name="rulesType">
+									<option value="">請選擇</option>
+									<option value="1">打折</option>
+							</select>
+
+							</li>
+							<li>状态： <select name="status">
+									<option value="0" selected="selected">未发放</option>
+									<option value="1">已发放</option>
+									<option value="2">未领取</option>
+									<option value="3">已领取</option>
+									<option value="4">已使用</option>
+									<option value="5">已过期</option>
+							</select>
+
+							</li>
+							<li>目標会员類型： <select name="membersType">
+									<option value="">請選擇</option>
+									<option value="0">普通會員</option>
+									<option value="1">VIP會員</option>
+									<option value="2">通用</option>
+							</select>
+							</li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:couponManger:add"> <i
+					class="fa fa-plus"></i> 添加
+				</a> <a class="btn btn-primary btn-edit disabled"
+					onclick="$.operate.edit()"
+					shiro:hasPermission="system:couponManger:edit"> <i
+					class="fa fa-edit"></i> 修改
+				</a>
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="system:couponManger:export"> <i
+					class="fa fa-download"></i> 導出
+				</a>
+				  <!-- <a class="btn btn-primary  "
+					onclick="grantCoupon()"
+					> <i
+					class="fa fa-edit"></i> 发放优惠券
+				</a>  -->
+				<!--  <a class="btn btn-warning" id="btnPay";> <i
+					class="fa fa-download"></i> 支付
+					
+				</a> -->
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<input id="couponCode" hidden="hidden">
+	<input id="id" hidden="hidden">
+	<input id="noGrantNum" hidden="hidden">
+	<input id="membersType" hidden="hidden">
+	
+     <!-- <script type="text/javascript" src="../../../stripe/checkout.js"></script> -->
+    <script type="text/javascript" src="../../../util.js"></script>
+	<script th:inline="javascript">
+	var data =null;
+        var editFlag = [[${@permission.hasPermi('system:couponManger:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:couponManger:remove')}]];
+        var prefix = ctx + "system/couponManger";
+		var payPO={};
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "優惠券管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序号',
+					visible: false
+				},
+				{
+					field : 'title', 
+					title : '标题',
+					sortable: true
+				},
+				{
+					field : 'explanation', 
+					title : '説明',
+					sortable: true
+				},
+				{
+					field : 'couponRole', 
+					title : '优惠折扣類型',
+					formatter: function(value, row, index) {
+                    	if(value =="0"){
+                    		return  "等值";
+                    	}
+                    	return "折扣";
+                    }
+				},
+				{
+					field : 'couponValues', 
+					title : '优惠规则值'
+				},
+				{
+					field : 'types', 
+					title : '優惠券條件',
+					formatter: function(value, row, index) {
+					if(value =="0"){
+                		return  "優惠券";
+                	}else if(value ==1){
+                	    return "優惠代碼";
+                	}
+                	return "未知类型";
+				   }
+				},
+				{
+					field : 'rulesType', 
+					title : '优惠规则',
+					formatter: function(value, row, index) {
+                    	if(value =="2"){
+                    		return  "注册赠送";
+                    	}else if(value =="3"){
+                    		return "購買VIP";
+                    	}
+                    	return "打折";
+                    }
+				},
+				{
+					field : 'effectiveTimeBegin', 
+					title : '有效时间',
+				},
+				{
+					field : 'effectiveTimeEnd', 
+					title : '失效时间',
+				},
+				{
+					field : 'num', 
+					title : '縂數量',
+				},
+				{
+					field : 'noGrantNum', 
+					title : '未發放數量',
+				},
+				{
+					field : 'membersType', 
+					title : '目標類型',
+					formatter: function(value, row, index) {
+					if(value =="0"){
+                		return  "普通會員";
+                	}else if(value ==1){
+                	    return "VIP會員";
+                	}
+                	return "通用";
+					}
+				},
+				{
+					field : 'status', 
+					title : '状态',
+					formatter: function(value, row, index) {
+					if(value =="0"){
+                		return  "未发放";
+                	}else if(value ==1){
+                	    return "已发放";
+                	}else if(value ==2){
+                	    return "未领取";
+                	}else if(value ==3){
+                	    return "已领取";
+                	}else if(value ==4){
+                	    return "已使用";
+                	}else if(value ==5){
+                	    return "已过期";
+                	}
+                	 return "未知状态";
+					}
+				},{
+					field : 'picUrl', 
+					title : '圖片',
+					formatter:function(value,row,index){
+						if(value){
+						  return '<a href="javascript:void(0)" onclick=openImg("'+value+'")>查看圖片 </a>';
+						}
+					}
+					
+				},
+				{
+					field : 'isVaild', 
+					title : '是否有效',
+					formatter: function(value, row, index) {
+					if(value =="yes"){
+                		return  "有效";
+                	}else if(value =='no'){
+                	    return "無效";
+                	}
+                	return "未知类型";
+					}
+				},
+				{
+					field : 'createDate', 
+					title : '創建時間',
+					sortable: true
+				},
+				{
+					field : 'createBy', 
+					title : '創建用户',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	if(row.isVaild=='yes'){
+		                    actions.push('<a class="btn btn-success btn-xs" href="#" onclick="grantCoupon(\'' + row.couponCode +'\','+row.noGrantNum+','+row.membersType+','+row.id+')"><i class="fa fa-edit"></i>發放優惠券</a> ');
+    	                 	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>編輯</a> ');
+		                	actions.push('<a class="btn btn-success btn-xs " href="/system/couponManger/showQC.do?id=' + row.id + '" "><i class="fa fa-edit"></i>生成二维码</a> ');
+		            	}
+		            	actions.push('<a class="btn btn-success btn-xs" href="#" onclick="openAddView(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看优惠券列表</a> ');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+            
+          /*    //支付
+            var myStripe = {
+		    testKey: 'pk_test_YHsHRIwNXJlZjK9WSbxfRPDz',
+		    payHandler: function (f) {
+		        return StripeCheckout.configure({
+		            key: this.testKey,
+		            name: "购买VIP会员",
+		            email:'29@qq.com',
+		            currency: 'cad',
+		            amount: 888888,
+		            image: "https://stripe.com/img/documentation/checkout/marketplace.png",
+		            allowRememberMe: false,
+		            locale: 'auto',
+		            token: function (token) {
+		            	console.log('token'+JSON.stringify(token));
+		            	f.tokenId = token.id;
+		            	f.email = token.email;
+		            	f.callback(f);
+		            }
+		        });
+		    },
+		    pay: function (f) {
+		        this.payHandler(f).open();
+		    }
+			}
+            
+          //點擊支付
+            $('#btnPay').on('click', function () {
+                myStripe.pay({
+                    title: '購買會員VIP',
+                    currency:'cad',
+                    amount: 888888,
+                    callback: function (payPO) {
+                        requestService(payPO.email,payPO.tokenId,payPO.amount);
+                    }
+                });
+            });
+            
+            function requestService(email,tokenId,amount){
+            	 $.ajax({
+	            	 type: "post",
+	                 url: "/api/payApi/payment",
+	                 data: {email:email, tokenId:tokenId,ammount:amount},
+	                 success: function(data){
+						if(data.code ==0){
+							$.modal.alertSuccess(data.msg);		
+						}else{
+							$.modal.alertError(data.msg);
+							$("#btnPay").trigger("click");
+						}                	 
+                 }
+            	 });
+            } */
+         
+        }); 
+        function openAddView(couponId){
+        	var url ="/system/myCoupon/"+couponId;
+        	openPage('查看優惠券列表',url,1550);
+        } 
+        function showQC(couponId){
+        	var url ="/system/couponManger/showQC.do?id="+couponId;
+        	layer.open({
+      		  type: 1,
+      		  title: false,
+      		  closeBtn: 0,
+      		  area: '706px',
+      		  skin: 'layui-layer-nobg', //没有背景色
+      		  shadeClose: true,
+      		  content: "<img  src='"+url+"' />"
+      		});
+        } 
+        function grantCoupon(couponCode,noGrantNum,membersType,id){
+        	if(noGrantNum && noGrantNum >0){
+        		$.modal.msgWarning('該優惠券沒有可發放的數量!未發放數量為:'+noGrantNum);
+        	}
+        	$("#noGrantNum").val(noGrantNum);
+        	$("#couponCode").val(couponCode);
+        	$("#membersType").val(membersType);
+        	$("#id").val(id);
+        	
+        	if(couponCode && noGrantNum)
+    		$.modal.confirm("該優惠券還有"+noGrantNum + "張優惠券未發放,請選擇 小於或者等於"+noGrantNum+'位會員', function() {
+    			var url ="/system/couponManger/selectMembers.do?couponCode="+couponCode;
+            	openPage('选择发放优惠券会员列表',url,1550);	
+        	});
+    		
+        }
+    </script>
+</body>
+</html>

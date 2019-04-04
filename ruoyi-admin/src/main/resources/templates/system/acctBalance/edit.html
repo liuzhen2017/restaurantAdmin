@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-acctBalance-edit" th:object="${acctBalance}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">賬號：</label>
+				<div class="col-sm-8">
+					<input id="accNo" name="accNo" th:field="*{accNo}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">賬戶類型：</label>
+				<div class="col-sm-8">
+					<input id="accType" name="accType" th:field="*{accType}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">可用餘額：</label>
+				<div class="col-sm-8">
+					<input id="canBalance" name="canBalance" th:field="*{canBalance}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">凍結金額：</label>
+				<div class="col-sm-8">
+					<input id="freezingBalance" name="freezingBalance" th:field="*{freezingBalance}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建日期：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" th:field="*{createDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">創建用戶：</label>
+				<div class="col-sm-8">
+					<input id="createBy" name="createBy" th:field="*{createBy}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">修改日期：</label>
+				<div class="col-sm-8">
+					<input id="updataDate" name="updataDate" th:field="*{updataDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">修改用戶：</label>
+				<div class="col-sm-8">
+					<input id="updateBy" name="updateBy" th:field="*{updateBy}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/acctBalance";
+		$("#form-acctBalance-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-acctBalance-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

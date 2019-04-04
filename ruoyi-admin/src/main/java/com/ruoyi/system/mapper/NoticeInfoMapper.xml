@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.NoticeInfoMapper">
+    
+    <resultMap type="NoticeInfo" id="NoticeInfoResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="resourceTable"    column="resource_table"    />
+        <result property="resourceId"    column="resource_id"    />
+        <result property="memId"    column="mem_id"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="seeDate"    column="see_date"    />
+        <result property="isSee"    column="is_see"    />
+        <result property="picUrl"    column="pic_url"    />
+    </resultMap>
+	
+	<sql id="selectNoticeInfoVo">
+        select id, title, content, resource_table, resource_id, mem_id, create_date, see_date, is_see,pic_url from notice_info
+    </sql>
+	
+    <select id="selectNoticeInfoList" parameterType="NoticeInfo" resultMap="NoticeInfoResult">
+        <include refid="selectNoticeInfoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="resourceTable != null  and resourceTable != '' "> and resource_table = #{resourceTable}</if>
+             <if test="resourceId != null "> and resource_id = #{resourceId}</if>
+             <if test="memId != null "> and mem_id = #{memId}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="seeDate != null "> and see_date = #{seeDate}</if>
+             <if test="isSee != null  and isSee != '' "> and is_see = #{isSee}</if>
+             
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectNoticeInfoById" parameterType="Integer" resultMap="NoticeInfoResult">
+        <include refid="selectNoticeInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertNoticeInfo" parameterType="NoticeInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into notice_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="resourceTable != null  and resourceTable != ''  ">resource_table,</if>
+			<if test="resourceId != null  ">resource_id,</if>
+			<if test="memId != null  ">mem_id,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="seeDate != null  ">see_date,</if>
+			<if test="isSee != null  and isSee != ''  ">is_see,</if>
+			<if test="picUrl != null  and picUrl != '' ">  pic_url</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="resourceTable != null  and resourceTable != ''  ">#{resourceTable},</if>
+			<if test="resourceId != null  ">#{resourceId},</if>
+			<if test="memId != null  ">#{memId},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="seeDate != null  ">#{seeDate},</if>
+			<if test="isSee != null  and isSee != ''  ">#{isSee},</if>
+			<if test="picUrl != null  and picUrl != '' ">  #{picUrl}</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateNoticeInfo" parameterType="NoticeInfo">
+        update notice_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="resourceTable != null  and resourceTable != ''  ">resource_table = #{resourceTable},</if>
+            <if test="resourceId != null  ">resource_id = #{resourceId},</if>
+            <if test="memId != null  ">mem_id = #{memId},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="seeDate != null  ">see_date = #{seeDate},</if>
+            <if test="isSee != null  and isSee != ''  ">is_see = #{isSee},</if>
+            <if test="picUrl != null  and picUrl != '' ">  pic_url = #{picUrl}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteNoticeInfoById" parameterType="Integer">
+        delete from notice_info where id = #{id}
+    </delete>
+	
+    <delete id="deleteNoticeInfoByIds" parameterType="String">
+        delete from notice_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AcctBalanceMapper">
+    
+    <resultMap type="AcctBalance" id="AcctBalanceResult">
+        <result property="id"    column="id"    />
+        <result property="accNo"    column="acc_no"    />
+        <result property="accType"    column="acc_type"    />
+        <result property="canBalance"    column="can_balance"    />
+        <result property="freezingBalance"    column="freezing_balance"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updataDate"    column="updata_date"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+	
+	<sql id="selectAcctBalanceVo">
+        select id, acc_no, acc_type, can_balance, freezing_balance, create_date, create_by, updata_date, update_by from acct_balance
+    </sql>
+	
+    <select id="selectAcctBalanceList" parameterType="AcctBalance" resultMap="AcctBalanceResult">
+        <include refid="selectAcctBalanceVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="accNo != null "> and acc_no = #{accNo}</if>
+             <if test="accType != null "> and acc_type = #{accType}</if>
+             <if test="canBalance != null "> and can_balance = #{canBalance}</if>
+             <if test="freezingBalance != null "> and freezing_balance = #{freezingBalance}</if>
+             <if test="createDate != null "> and create_date = #{createDate}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="updataDate != null "> and updata_date = #{updataDate}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+         </where>
+         order by id desc
+    </select>
+    
+    <select id="selectAcctBalanceById" parameterType="Integer" resultMap="AcctBalanceResult">
+        <include refid="selectAcctBalanceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAcctBalance" parameterType="AcctBalance" useGeneratedKeys="true" keyProperty="id">
+        insert into acct_balance
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accNo != null  ">acc_no,</if>
+			<if test="accType != null  ">acc_type,</if>
+			<if test="canBalance != null  ">can_balance,</if>
+			<if test="freezingBalance != null  ">freezing_balance,</if>
+			<if test="createDate != null  ">create_date,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="updataDate != null  ">updata_date,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accNo != null  ">#{accNo},</if>
+			<if test="accType != null  ">#{accType},</if>
+			<if test="canBalance != null  ">#{canBalance},</if>
+			<if test="freezingBalance != null  ">#{freezingBalance},</if>
+			<if test="createDate != null  ">#{createDate},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="updataDate != null  ">#{updataDate},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAcctBalance" parameterType="AcctBalance">
+        update acct_balance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accNo != null  ">acc_no = #{accNo},</if>
+            <if test="accType != null  ">acc_type = #{accType},</if>
+            <if test="canBalance != null  ">can_balance = #{canBalance},</if>
+            <if test="freezingBalance != null  ">freezing_balance = #{freezingBalance},</if>
+            <if test="createDate != null  ">create_date = #{createDate},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="updataDate != null  ">updata_date = #{updataDate},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteAcctBalanceById" parameterType="Integer">
+        delete from acct_balance where id = #{id}
+    </delete>
+	
+    <delete id="deleteAcctBalanceByIds" parameterType="String">
+        delete from acct_balance where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
