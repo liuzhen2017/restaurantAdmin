@@ -60,6 +60,8 @@ public class QrCodeCreateUtil {
 		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L); // 矫错级别
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
 		// 创建比特矩阵(位矩阵)的QR码编码的字符串
+		//加上标示
+		content="https://www.mrokbang.com.hk="+content;
 		BitMatrix byteMatrix = qrCodeWriter.encode(content,
 				BarcodeFormat.QR_CODE, qrCodeSize, qrCodeSize, hintMap);
 		// 使BufferedImage勾画QRCode (matrixWidth 是行二维码像素点)
