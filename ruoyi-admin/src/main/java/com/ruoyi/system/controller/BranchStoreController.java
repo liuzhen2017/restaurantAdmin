@@ -138,7 +138,7 @@ public class BranchStoreController extends BaseController
 	@GetMapping("/showListView")
 	public String showListView()
 	{
-	    return  "/system/menuFood/showListView";
+	    return  "/system/menuFood/menuFood";
 	}
 	
 	/**

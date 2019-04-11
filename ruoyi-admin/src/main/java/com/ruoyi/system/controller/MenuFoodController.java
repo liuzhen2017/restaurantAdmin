@@ -153,5 +153,9 @@ public class MenuFoodController extends BaseController
 	{		
 		return toAjax(menuFoodService.deleteMenuFoodByIds(ids));
 	}
-	
+	@RequestMapping("/show")
+	public String show()
+	{
+	    return  prefix + "/show";
+	}
 }
