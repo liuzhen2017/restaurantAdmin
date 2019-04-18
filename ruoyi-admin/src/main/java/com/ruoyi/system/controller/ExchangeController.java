@@ -114,6 +114,15 @@ public class ExchangeController extends BaseController
 	}
 	
 	/**
+	 * 修改餐牌
+	 */
+	@GetMapping("/showMemFoodType")
+	public String showMemFoodType()
+	{
+	    return prefix + "/showMemFoodType";
+	}
+	
+	/**
 	 * 修改保存餐牌
 	 */
 	@RequiresPermissions("system:exchange:edit")

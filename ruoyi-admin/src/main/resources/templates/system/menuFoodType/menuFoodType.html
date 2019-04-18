@@ -74,6 +74,17 @@
 					sortable: true
 				},
 				{
+					field : 'menuFoodType', 
+					title : '類型',
+					formatter:function(value,row,index){
+						if(value ==1){
+						    return "菜盤類型";
+						}else{
+							return "贈送類型";
+						}
+					}
+				},
+				{
 					field : 'orderBy', 
 					title : '排序',
 					sortable: true

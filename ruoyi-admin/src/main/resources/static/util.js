@@ -34,13 +34,13 @@ function uploadFile() {
 	return fileUrl;
 }
 $("#choiseNo").on('click',function(){
-	debugger;
+	
 	$("#isVaild").val('no');
 	$("#isValid").val('no');
 	
 });
 $("#choiseYes").on('click',function(){
-	debugger;
+	
 	$("#isVaild").val('yes');
 	$("#isValid").val('yes');
 });

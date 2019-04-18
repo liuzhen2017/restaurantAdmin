@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.AccountFlowMapper">
     
-    <resultMap type="AccountFlow" id="AccountFlowResult">
+   <resultMap type="AccountFlow" id="AccountFlowResult">
         <result property="id"    column="id"    />
         <result property="accNo"    column="acc_no"    />
         <result property="tranType"    column="tran_type"    />
@@ -18,10 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="menuAccNo"    column="menu_acc_no"    />
         <result property="branchStoreId"    column="branch_store_id"    />
         <result property="branchStoreName"    column="branch_store_name"    />
+        <result property="invoiceNo"    column="invoice_no"    />
+        <result property="invoiceAmount"    column="invoice_amount"    />
+        <result property="netAmount"    column="net_amount"    />
+        <result property="isVaild"    column="is_vaild"    />
+        <result property="foodId"    column="food_id"    />
+        <result property="couponCode"    column="coupon_code"    />
     </resultMap>
 	
 	<sql id="selectAccountFlowVo">
-        select id, acc_no, tran_type, money, tran_des, before_money, after_money, create_date, create_by, menu_id, menu_acc_no, branch_store_id, branch_store_name from account_flow
+        select id, acc_no, tran_type, money, tran_des, before_money, after_money, create_date, create_by, menu_id, menu_acc_no, branch_store_id, branch_store_name, invoice_no, invoice_amount, net_amount,is_vaild,food_id,coupon_code from account_flow
     </sql>
 	
     <select id="selectAccountFlowList" parameterType="AccountFlow" resultMap="AccountFlowResult">
@@ -40,6 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="menuAccNo != null  and menuAccNo != '' "> and menu_acc_no = #{menuAccNo}</if>
              <if test="branchStoreId != null  and branchStoreId != '' "> and branch_store_id = #{branchStoreId}</if>
              <if test="branchStoreName != null  and branchStoreName != '' "> and branch_store_name = #{branchStoreName}</if>
+             <if test="invoiceNo != null  and invoiceNo != '' "> and invoice_no = #{invoiceNo}</if>
+             <if test="invoiceAmount != null "> and invoice_amount = #{invoiceAmount}</if>
+             <if test="netAmount != null "> and net_amount = #{netAmount}</if>
+             <if test="isVaild != null  and isVaild != '' "> and is_vaild = #{isVaild}</if>
+             <if test="foodId != null  "> and food_id = #{foodId}</if>
+             <if test="couponCode != null  and couponCode != '' "> and coupon_code = #{couponCode}</if>
          </where>
          order by id desc
     </select>
@@ -64,6 +76,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="menuAccNo != null  and menuAccNo != ''  ">menu_acc_no,</if>
 			<if test="branchStoreId != null  and branchStoreId != ''  ">branch_store_id,</if>
 			<if test="branchStoreName != null  and branchStoreName != ''  ">branch_store_name,</if>
+			<if test="invoiceNo != null  and invoiceNo != ''  ">invoice_no,</if>
+			<if test="invoiceAmount != null  ">invoice_amount,</if>
+			<if test="netAmount != null  ">net_amount,</if>
+			<if test="isVaild != null  and isVaild != ''  ">  is_vaild,</if>
+			<if test="foodId != null  "> food_id,</if>
+             <if test="couponCode != null  and couponCode != '' ">  coupon_code,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="accNo != null  and accNo != ''  ">#{accNo},</if>
@@ -78,6 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="menuAccNo != null  and menuAccNo != ''  ">#{menuAccNo},</if>
 			<if test="branchStoreId != null  and branchStoreId != ''  ">#{branchStoreId},</if>
 			<if test="branchStoreName != null  and branchStoreName != ''  ">#{branchStoreName},</if>
+			<if test="invoiceNo != null  and invoiceNo != ''  ">#{invoiceNo},</if>
+			<if test="invoiceAmount != null  ">#{invoiceAmount},</if>
+			<if test="netAmount != null  ">#{netAmount},</if>
+			<if test="isVaild != null and isVaild != ''  ">  #{isVaild},</if>
+			<if test="foodId != null  ">  #{foodId},</if>
+             <if test="couponCode != null  and couponCode != '' ">  #{couponCode},</if>
          </trim>
     </insert>
 	 
@@ -96,6 +120,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="menuAccNo != null  and menuAccNo != ''  ">menu_acc_no = #{menuAccNo},</if>
             <if test="branchStoreId != null  and branchStoreId != ''  ">branch_store_id = #{branchStoreId},</if>
             <if test="branchStoreName != null  and branchStoreName != ''  ">branch_store_name = #{branchStoreName},</if>
+            <if test="invoiceNo != null  and invoiceNo != ''  ">invoice_no = #{invoiceNo},</if>
+            <if test="invoiceAmount != null  ">invoice_amount = #{invoiceAmount},</if>
+            <if test="netAmount != null  ">net_amount = #{netAmount},</if>
+            <if test="isVaild != null and isVaild != '' ">  is_vaild = #{isVaild}</if>
+            <if test="foodId != null  ">  food_id = #{foodId}</if>
+             <if test="couponCode != null  and couponCode != '' "> coupon_code = #{couponCode}</if>
         </trim>
         where id = #{id}
     </update>

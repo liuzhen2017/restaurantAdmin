@@ -44,6 +44,15 @@ public class AccountFlow extends BaseEntity
 	private String branchStoreId;
 	/** 門店名 */
 	private String branchStoreName;
+	/** 发票号 */
+	private String invoiceNo;
+	/** 发票金额 */
+	private BigDecimal invoiceAmount;
+	/** 交易金额 */
+	private BigDecimal netAmount;
+	private String isVaild;
+	private Integer foodId;
+	private String couponCode;
 
 	public void setId(Integer id) 
 	{
@@ -162,6 +171,33 @@ public class AccountFlow extends BaseEntity
 	{
 		return branchStoreName;
 	}
+	public void setInvoiceNo(String invoiceNo) 
+	{
+		this.invoiceNo = invoiceNo;
+	}
+
+	public String getInvoiceNo() 
+	{
+		return invoiceNo;
+	}
+	public void setInvoiceAmount(BigDecimal invoiceAmount) 
+	{
+		this.invoiceAmount = invoiceAmount;
+	}
+
+	public BigDecimal getInvoiceAmount() 
+	{
+		return invoiceAmount;
+	}
+	public void setNetAmount(BigDecimal netAmount) 
+	{
+		this.netAmount = netAmount;
+	}
+
+	public BigDecimal getNetAmount() 
+	{
+		return netAmount;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -178,6 +214,37 @@ public class AccountFlow extends BaseEntity
             .append("menuAccNo", getMenuAccNo())
             .append("branchStoreId", getBranchStoreId())
             .append("branchStoreName", getBranchStoreName())
+            .append("invoiceNo", getInvoiceNo())
+            .append("invoiceAmount", getInvoiceAmount())
+            .append("netAmount", getNetAmount())
             .toString();
     }
+
+	public String getIsVaild() {
+		return isVaild;
+	}
+
+	public void setIsVaild(String isVaild) {
+		this.isVaild = isVaild;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Integer getFoodId() {
+		return foodId;
+	}
+
+	public void setFoodId(Integer foodId) {
+		this.foodId = foodId;
+	}
+
+	public String getCouponCode() {
+		return couponCode;
+	}
+
+	public void setCouponCode(String couponCode) {
+		this.couponCode = couponCode;
+	}
 }

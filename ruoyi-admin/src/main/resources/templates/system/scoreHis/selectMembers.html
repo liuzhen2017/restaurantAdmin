@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId" <!-- th:object="${couponManger}" --> >
+					<div class="select-list">
+						<ul>
+							<li>
+								邮箱：<input type="text" name="email"/>
+							</li>
+							<li>
+								姓名：<input type="text" name="name"/>
+							</li>
+								<input hidden name="isVaild" value="yes">
+ 							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="grantCoupon()" shiro:hasPermission="system:members:add">
+					<i class="fa fa-plus"></i> 選擇
+				</a>
+				<span id="cal" style="color: red;"></span>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+    var num;
+        var editFlag = [[${@permission.hasPermi('system:members:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:members:remove')}]];
+        var prefix = ctx + "system/members";
+
+        $(function() {
+            var options = {
+                url: prefix + "/selectGrantList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "会员管理",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '序號',
+					visible: false
+				},
+				{
+					field : 'email', 
+					title : '邮箱',
+					sortable: true
+				},
+				{
+					field : 'name', 
+					title : '姓名',
+					sortable: true
+				},
+				{
+					field : 'region', 
+					title : '地区',
+					sortable: true
+				},
+				{
+					field : 'sex', 
+					title : '性别',
+					formatter: function(value, row, index) {
+                    	if(value =="1"){
+                    		return  "男士";
+                    	}else if(value=="2"){
+                    	  return "女士";
+                    	}
+                    	 return "保密";
+                    }
+				},
+				{
+					field : 'birthday', 
+					title : '生日',
+					sortable: true
+				},
+				{
+					field : 'score', 
+					title : '積分',
+					sortable: true
+				},
+				{
+					field : 'createDate', 
+					title : '創建日期',
+					sortable: true
+				},
+				{
+					field : 'membersType', 
+					title : '會員類型',
+					formatter: function(value, row, index) {
+                    	if(value =="1"){
+                    		return  "VIP會員";
+                    	}
+                    	return "普通會員";
+                    }
+				},
+				{
+					field : 'upgradeDate', 
+					title : '升級時間',
+					sortable: true
+				},
+				{
+					field : 'vipDate', 
+					title : '會員有效期',
+					sortable: true
+				},
+				{
+					field : 'isVaild', 
+					title : '是否注銷',
+					formatter: function(value, row, index) {
+                    	if(value =="yes"){
+                    		return  "有效";
+                    	}
+                    	return "無效";
+                    }
+				
+		        },{
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="selectStore('+row.id+',\'' +row.name+ '\')"><i class="fa fa-edit"></i>选择</a> ');
+						return actions.join('');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+        function selectStore(id,name){
+       	     parent.$("#membersId").val(id);
+          	 parent.$("#membersName").val(name);
+          	 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+               parent.layer.close(index); //再执行关闭   ;
+       	
+       }
+    </script>
+</body>
+</html>
+

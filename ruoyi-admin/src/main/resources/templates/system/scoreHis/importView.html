@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" enctype="multipart/form-data" id="form-scoreHis-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">請上導入文件：</label>
+				<div class="col-sm-8">
+					<input id="file" name="file" class="form-control" type="file">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" src="../../../util.js"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "system/scoreHis"
+		$("#form-scoreHis-add").validate({
+			rules:{
+				file:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+			var files = document.getElementById("file");
+			var filePath = $("#file").val(), // 获取到input的value，里面是文件的路径
+			fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+			if (!/.(xls|xlsx)$/.test(fileFormat)) {
+				$.modal.alertError("文件必須是xls,xlsx格式");
+				return false;
+			}
+			var formData = new FormData();
+			formData.append("file", files.files[0]);
+			$.ajax({
+				type : "POST",
+				async:false,
+				url : prefix + "/import",
+				data : formData,
+				type : "post",
+				processData : false,
+				contentType : false,
+				success : function(result) {
+					if (result.code == web_status.SUCCESS) {
+						fileUrl = result.url;
+					} else {
+						$.modal.alertError(result.msg);
+
+					}
+				},
+				error : function(error) {
+					$.modal.alertWarning("图片上传失败。");
+
+				}
+			});
+	    }
+	</script>
+</body>
+</html>

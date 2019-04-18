@@ -1,6 +1,7 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,15 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.base.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.page.TableDataInfo;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.framework.web.base.BaseController;
 import com.ruoyi.system.domain.Members;
 import com.ruoyi.system.service.IMembersService;
-import com.ruoyi.framework.web.base.BaseController;
-import com.ruoyi.common.page.TableDataInfo;
-import com.ruoyi.common.base.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
  * 会员管理 信息操作处理
@@ -138,6 +142,18 @@ public class MembersController extends BaseController
 	public AjaxResult remove(String ids)
 	{		
 		return toAjax(membersService.deleteMembersByIds(ids));
+	}
+	/**
+	 * 导入用户积分
+	 * @param file
+	 * @param membersId
+	 * @param membersName
+	 * @return
+	 */
+	public AjaxResult importScoket(@RequestParam("file") MultipartFile file,@RequestParam("membersId") String membersId,@RequestParam("membersName")String membersName){
+		
+		return null;
+		
 	}
 	
 }

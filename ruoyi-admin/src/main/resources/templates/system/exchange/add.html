@@ -72,18 +72,15 @@
 					<input id="exchangePointsScord" name="exchangePointsScord" class="form-control" type="number">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否是热门：</label>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">推送類型：</label>
 				<div class="col-sm-8">
-					<div class="col-sm-8">
-					<div class="onoffswitch">
-                         <input type="checkbox" class="onoffswitch-checkbox" id="isHot" name="isHot">
-                         <label class="onoffswitch-label" for="isHot">
-                             <span class="onoffswitch-inner"></span>
-                             <span class="onoffswitch-switch"></span>
-                         </label>
-                     </div>
-				</div>
+					<select name="isHot">
+					  <option value="0">普通</option>
+					  <!-- <option value="1">熱門</option> -->
+					  <!-- <option value="2">特別優惠</option> -->
+					  <option value="3">精選商品</option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -180,12 +177,6 @@
 				isHot:{
 					required:true,
 				},
-				takeEffectDate:{
-					required:true,
-				},
-				invalidDate:{
-					required:true,
-				},
 				totalNums:{
 					required:true,
 				},
@@ -218,7 +209,7 @@
 	        }
 	    }
 		function showMenuFoodType(){
-			openPage('餐牌類型',"/system/menuFood/showMemFoodType",600,500);
+			openPage('餐牌類型',"/system/exchange/showMemFoodType",600,500);
 	   }
 	</script>
 </body>

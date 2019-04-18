@@ -62,16 +62,33 @@
 					<input id="exchangePointsScord" name="exchangePointsScord" th:field="*{exchangePointsScord}" class="form-control" type="number">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">是否是热门：</label>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" th:field="*{isHot}">推送類型：</label>
 				<div class="col-sm-8">
-					<div class="onoffswitch">
-                         <input type="checkbox" th:checked="${menuFood.isHot == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isHot" name="isHot">
-                         <label class="onoffswitch-label" for="isHot"> <span
-							class="onoffswitch-inner" id="choiseYesHot"></span> <span
-							class="onoffswitch-switch" id="choiseNoHot" ></span>
-						</label>
-                     </div>
+					<select name="isHot">
+					  <option value="0">普通</option>
+					  <!-- <option value="1">熱門</option> -->
+					  <!-- <option value="2">特別優惠</option> -->
+					  <option value="3">精選商品</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">生效日期：</label>
+				<div class="col-sm-8">
+					<input id="takeEffectDate" name="takeEffectDate" th:field="*{takeEffectDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">失效日期：</label>
+				<div class="col-sm-8">
+					<input id="invalidDate" name="invalidDate" th:field="*{invalidDate}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">縂數量：</label>
+				<div class="col-sm-8">
+					<input id="totalNums" name="totalNums" th:field="*{totalNums}" class="form-control" type="number">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -96,24 +113,6 @@
                              <span class="onoffswitch-switch"></span>
                          </label>
                      </div>
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">生效日期：</label>
-				<div class="col-sm-8">
-					<input id="takeEffectDate" name="takeEffectDate" th:field="*{takeEffectDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">失效日期：</label>
-				<div class="col-sm-8">
-					<input id="invalidDate" name="invalidDate" th:field="*{invalidDate}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">兑换后有效天数,day：</label>
-				<div class="col-sm-8">
-					<input id="effectiveDay" name="effectiveDay" th:field="*{effectiveDay}" class="form-control" type="text">
 				</div>
 			</div>
 		</form>
@@ -190,18 +189,7 @@
 				isHot:{
 					required:true,
 				},
-				takeEffectDate:{
-					required:true,
-				},
-				invalidDate:{
-					required:true,
-				},
 				totalNums:{
-					required:true,
-				},
-				effectiveDay:{
-					required:true,
-				},rulesType:{
 					required:true,
 				},
 				typeName:{

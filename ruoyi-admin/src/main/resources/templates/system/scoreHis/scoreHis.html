@@ -23,6 +23,14 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="system:scoreHis:importView"> <i
+					class="fa fa-plus"></i> 導入
+				</a><a class="btn btn-danger btn-del btn-del disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="system:scoreHis:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a>
 			</div>
 			<div class="col-sm-12 select-table table-striped">
 				<table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -74,7 +82,7 @@
 					sortable: true
 				},
 				{
-					field : 'describe', 
+					field : 'describes', 
 					title : '描述',
 					sortable: true
 				},
