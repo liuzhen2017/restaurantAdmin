@@ -70,17 +70,17 @@
 				<label class="col-sm-3 control-label">注銷?：</label>
 				<div class="col-sm-8">
 					<div class="onoffswitch">
-                         <input type="checkbox" th:checked="${integralRole.isValid == 'yes' ? true : false}" class="onoffswitch-checkbox" id="isValid" name="isValid">
-                          <label class="onoffswitch-label" for="isValid"> <span
-							class="onoffswitch-inner" id="choiseYes"></span> <span
-							class="onoffswitch-switch" id="choiseNo" ></span>
-						</label>
+					<select name="integralType" id="integralType"  th:field="*{isValid}">
+									<option value="yes">有效</option>
+									<option value="no">无效</option>
+    				</select>
                      </div>
 				</div>
 			</div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
+     <script type="text/javascript" src="../../../util.js"></script>
     <script type="text/javascript">
     layui.use('laydate', function() {
         var laydate = layui.laydate;

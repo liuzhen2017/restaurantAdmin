@@ -1,7 +1,10 @@
 //上传图片
-function uploadFile() {
+function uploadFile(fileId) {
+	if(!fileId){
+		fileId ="file";
+	}
 	var fileUrl;
-	var files = document.getElementById("file");
+	var files = document.getElementById(fileId);
 	var filePath = $("#file").val(), // 获取到input的value，里面是文件的路径
 	fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
 	if (!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(fileFormat)) {

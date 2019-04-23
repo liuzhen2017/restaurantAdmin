@@ -58,6 +58,7 @@
 					 <!--  <option value="2">注册赠送</option> -->
 					  <option value="3">購買VIP</option>
 					  <option value="4">購買商品</option>
+					  <option value="5">兑换商品打折</option>
 					</select>
 				</div>
 			</div>
@@ -69,6 +70,14 @@
 					  <!-- <option value="0">優惠券</option> -->
 					  <option value="1">優惠代碼</option>
 					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">选择兑换的商品：</label>
+				<div class="col-sm-8">
+				    <a href="#" onclick="openBranStore()">兑换商品打折，點擊選擇商品</a>
+					<input id="spareField2" readonly="readonly" name="spareField2" 	class="form-control" type="text">
+					<input id="spareField1" name="spareField1" 	type="hidden">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -190,6 +199,9 @@
 	            $.operate.save(prefix + "/add", $('#form-couponManger-add').serialize());
 	        }
 	    }
+		function openBranStore(){
+			openPage('兑换商品',"/system/menuFood/selectMenuFoodExchange",600,500);
+	   }
 	</script>
 </body>
 </html>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+
+							<li>菜品名稱：<input type="text" name="menuFoodName" />
+							</li>
+							<li>会员類型：<select name="membersId">
+									<option >請選擇</option>
+									<option value="0">普通會員</option>
+									<option value="1">VIP會員</option>
+							</select>
+							</li>
+
+							<li>所需積分：<input type="text" name="scord" />
+							</li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script th:inline="javascript">
+	var editFlag = [[${@permission.hasPermi('api:menuFood:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('api:menuFood:remove')}]];
+    var prefix = ctx + "system/exchange";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+			exportUrl: prefix + "/export",
+            modalName: "餐牌",
+			search: false,
+	        showExport: true,
+            columns: [
+	        {
+	            title: '操作',
+	            align: 'center',
+	            formatter: function(value, row, index) {
+	            	var actions = [];
+	            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="selectStore('+row.id+',\'' +row.title+ '\')"><i class="fa fa-edit"></i>选择</a> ');
+					return actions.join('');
+	            }
+	        },
+			{
+				field : 'spareField1', 
+				title : '優惠券編號(和pos機itemCode一致)',
+				visible: false
+			},
+			{
+				field : 'title', 
+				title : '标题',
+				sortable: true
+			},
+			{
+				field : 'describes', 
+				title : '描述',
+				sortable: true
+			},
+			{
+				field : 'rulesType', 
+				title : '贈送條件',
+				formatter:function(value,row,index){
+					if(value ==1){
+						return "升級VIP贈送"
+					}
+					if(value ==2){
+						return "積分兌換"
+					}
+				}
+			},
+			{
+				field : 'picUrl', 
+				title : '圖片',
+				formatter:function(value,row,index){
+					if(value){
+					  return '<a href="javascript:void(0)" onclick=openImg("'+value+'")>查看圖片 </a>';
+					}
+				}
+			},
+			{
+				field : 'typeName', 
+				title : '类型名称',
+				sortable: true
+			},
+			{
+				field : 'spareField5', 
+				title : '目標類型',
+				formatter: function(value, row, index) {
+				if(value =="0"){
+            		return  "普通會員";
+            	}else if(value ==1){
+            	    return "VIP會員";
+            	}
+            	return "通用";
+				}
+			},
+			{
+				field : 'price', 
+				title : '价格',
+				sortable: true
+			},
+			{
+				field : 'exchangePointsScord', 
+				title : '兑换积分',
+				sortable: true
+			},
+			{
+				field : 'takeEffectDate', 
+				title : '生效日期',
+				sortable: true
+			},
+			{
+				field : 'invalidDate', 
+				title : '失效日期',
+				sortable: true
+			},
+			{
+				field : 'totalNums', 
+				title : '總數量',
+				sortable: true
+			},
+			{
+				field : 'usedNums', 
+				title : '已用數量',
+				sortable: true
+			}]
+            };
+            $.table.init(options);
+        });
+        function selectStore(id,title){
+          	 parent.$("#spareField1").val(id);
+          	 parent.$("#spareField2").val(title);
+          	 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+               parent.layer.close(index); //再执行关闭   ;
+          }
+        function openImg(value){
+        	layer.open({
+        		  type: 1,
+        		  title: false,
+        		  closeBtn: 0,
+        		  area: '516px',
+        		  skin: 'layui-layer-nobg', //没有背景色
+        		  shadeClose: true,
+        		  content: "<img  src='"+value+"' />"
+        		});
+        	  
+        }
+    </script>
+</body>
+</html>

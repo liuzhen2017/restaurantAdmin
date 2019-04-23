@@ -98,6 +98,15 @@ public class MenuFoodController extends BaseController
 	/**
 	 * 新增餐牌
 	 */
+	@GetMapping("/selectMenuFoodExchange")
+	public String selectMenuFoodExchange()
+	{
+	    return "system/couponManger/selectMenuFoodExchange";
+	}
+	
+	/**
+	 * 新增餐牌
+	 */
 	@GetMapping("/showMemFoodType")
 	public String showMemFoodType()
 	{

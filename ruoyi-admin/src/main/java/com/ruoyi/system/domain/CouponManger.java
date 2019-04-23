@@ -2,50 +2,38 @@ package com.ruoyi.system.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.base.BaseEntity;
-
 import java.util.Date;
 
 /**
  * 优惠券管理表 coupon_manger
  * 
  * @author liuzhen
- * @date 2019-02-17
+ * @date 2019-04-23
  */
 public class CouponManger extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
 	/**  */
-	@Excel(name="序號")
 	private Integer id;
 	/**  */
-	@Excel(name="標題")
 	private String title;
 	/** 0优惠券,1优惠代码 */
-	@Excel(readConverterExp="0=優惠券,1=優惠代碼", name = "優惠券類型")
 	private Integer types;
 	/** 01满减,02打折, */
-	@Excel(readConverterExp="1=注册赠送,3=購買VIP", name = "優惠條件")
 	private Integer rulesType;
-	@Excel( name = "折扣值")
+	/** 比如,满一百减20  ,20%的折扣 */
 	private Double couponValues;
 	/** 有效时间 */
-	@Excel( name = "有效時間")
 	private String effectiveTimeBegin;
 	/** 失效时间 */
-	@Excel( name = "失效時間")
 	private String effectiveTimeEnd;
 	/** 数量 */
-	@Excel( name = "優惠券 數量")
 	private Integer num;
 	/** 会员类型0普通1VIP */
-	@Excel( name = "目標會員",readConverterExp="0=普通會員,1=VIP會員,2=通用")
 	private Integer membersType;
 	/** 是否有小0无效1有效 */
-	@Excel( name = "是否有效",readConverterExp="yes=有效,no=無效")
 	private String isVaild;
 	/** 创建时间 */
 	private Date createDate;
@@ -56,19 +44,32 @@ public class CouponManger extends BaseEntity
 	/**  */
 	private String updateBy;
 	/** 狀態0,未發放,1已發放,未領取,2,已過期 3.已經使用 */
-	@Excel( name = "優惠券狀態",readConverterExp="0=未發放,1=已發放,2=未領取,3=已領取,4=已使用,5.已過期")
 	private Integer status;
 	/** 使用説明 */
-	@Excel( name = "使用説明")
 	private String instructions;
-	private String explanation;
-	@Excel( name = "優惠券代碼")
+	/**  */
 	private String couponCode;
-	@Excel( name = "未發放數量")
+	/** 未發放數量 */
 	private Integer noGrantNum;
+	/** 图片地址 */
 	private String picUrl;
-	@Excel( name = "折扣類型",readConverterExp="0=等值,1=折扣")
+	/** 优惠规则,1价值 ,2折扣 */
 	private Integer couponRole;
+	/**  */
+	private String explanation;
+	/** 餐牌代码 */
+	private String spareField1;
+	/**  */
+	private String spareField2;
+	/**  */
+	private String spareField3;
+	/**  */
+	private String spareField4;
+	/**  */
+	private String spareField5;
+	/**  */
+	private String spareField6;
+
 	public void setId(Integer id) 
 	{
 		this.id = id;
@@ -204,6 +205,15 @@ public class CouponManger extends BaseEntity
 	{
 		return status;
 	}
+	public void setInstructions(String instructions) 
+	{
+		this.instructions = instructions;
+	}
+
+	public String getInstructions() 
+	{
+		return instructions;
+	}
 	public void setCouponCode(String couponCode) 
 	{
 		this.couponCode = couponCode;
@@ -221,6 +231,87 @@ public class CouponManger extends BaseEntity
 	public Integer getNoGrantNum() 
 	{
 		return noGrantNum;
+	}
+	public void setPicUrl(String picUrl) 
+	{
+		this.picUrl = picUrl;
+	}
+
+	public String getPicUrl() 
+	{
+		return picUrl;
+	}
+	public void setCouponRole(Integer couponRole) 
+	{
+		this.couponRole = couponRole;
+	}
+
+	public Integer getCouponRole() 
+	{
+		return couponRole;
+	}
+	public void setExplanation(String explanation) 
+	{
+		this.explanation = explanation;
+	}
+
+	public String getExplanation() 
+	{
+		return explanation;
+	}
+	public void setSpareField1(String spareField1) 
+	{
+		this.spareField1 = spareField1;
+	}
+
+	public String getSpareField1() 
+	{
+		return spareField1;
+	}
+	public void setSpareField2(String spareField2) 
+	{
+		this.spareField2 = spareField2;
+	}
+
+	public String getSpareField2() 
+	{
+		return spareField2;
+	}
+	public void setSpareField3(String spareField3) 
+	{
+		this.spareField3 = spareField3;
+	}
+
+	public String getSpareField3() 
+	{
+		return spareField3;
+	}
+	public void setSpareField4(String spareField4) 
+	{
+		this.spareField4 = spareField4;
+	}
+
+	public String getSpareField4() 
+	{
+		return spareField4;
+	}
+	public void setSpareField5(String spareField5) 
+	{
+		this.spareField5 = spareField5;
+	}
+
+	public String getSpareField5() 
+	{
+		return spareField5;
+	}
+	public void setSpareField6(String spareField6) 
+	{
+		this.spareField6 = spareField6;
+	}
+
+	public String getSpareField6() 
+	{
+		return spareField6;
 	}
 
     public String toString() {
@@ -243,42 +334,15 @@ public class CouponManger extends BaseEntity
             .append("instructions", getInstructions())
             .append("couponCode", getCouponCode())
             .append("noGrantNum", getNoGrantNum())
+            .append("picUrl", getPicUrl())
+            .append("couponRole", getCouponRole())
+            .append("explanation", getExplanation())
+            .append("spareField1", getSpareField1())
+            .append("spareField2", getSpareField2())
+            .append("spareField3", getSpareField3())
+            .append("spareField4", getSpareField4())
+            .append("spareField5", getSpareField5())
+            .append("spareField6", getSpareField6())
             .toString();
     }
-
-	public String getInstructions() {
-		return instructions;
-	}
-
-	public void setInstructions(String instructions) {
-		this.instructions = instructions;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public String getPicUrl() {
-		return picUrl;
-	}
-
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
-
-	public Integer getCouponRole() {
-		return couponRole;
-	}
-
-	public void setCouponRole(Integer couponRole) {
-		this.couponRole = couponRole;
-	}
-
-	public String getExplanation() {
-		return explanation;
-	}
-
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
 }
