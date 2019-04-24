@@ -73,13 +73,10 @@
 				<label class="col-sm-3 control-label">是否有效：</label>
 				<div class="col-sm-8">
 					<div class="onoffswitch">
-						<input type="checkbox"
-							th:checked="${menuFood.isValid == 'yes' ? true : false}"
-							class="onoffswitch-checkbox" id="isValid" name="isValid">
-						<label class="onoffswitch-label" for="isValid"> <span
-							class="onoffswitch-inner" id="choiseYes"></span> <span
-							class="onoffswitch-switch" id="choiseNo"></span>
-						</label>
+						<select name="isVaild" id="isValid"  th:field="*{isValid}">
+							<option value="yes">有效</option>
+							<option value="no">无效</option>
+						</select>
 					</div>
 				</div>
 			</div>

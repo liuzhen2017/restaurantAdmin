@@ -45,13 +45,10 @@
 				<label class="col-sm-3 control-label">是否有效：</label>
 				<div class="col-sm-8">
 					<div class="onoffswitch">
-						<input type="checkbox"
-							th:checked="${menuFoodType.isVaild == 'yes' ? true : false}"
-							class="onoffswitch-checkbox" id="isVaild" name="isVaild">
-						  <label class="onoffswitch-label" for="isVaild"> <span
-							class="onoffswitch-inner" id="choiseYes"></span> <span
-							class="onoffswitch-switch" id="choiseNo" ></span>
-						</label>
+						<select name="isVaild" id="isVaild"  th:field="*{isVaild}">
+							<option value="yes">有效</option>
+							<option value="no">无效</option>
+						</select>
 					</div>
 				</div>
 			</div>

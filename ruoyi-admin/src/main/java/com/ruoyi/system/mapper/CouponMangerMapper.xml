@@ -112,8 +112,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="types != null  ">#{types},</if>
 			<if test="rulesType != null  ">#{rulesType},</if>
 			<if test="couponValues != null  ">#{couponValues},</if>
-			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != '' "> #{effectiveTimeBegin}</if>
-            <if test="effectiveTimeEnd != null and effectiveTimeEnd != '' "> #{effectiveTimeEnd}  </if>
+			<if test="effectiveTimeBegin != null  and effectiveTimeBegin != ''  ">#{effectiveTimeBegin},</if>
+			<if test="effectiveTimeEnd != null  and effectiveTimeEnd != ''  ">#{effectiveTimeEnd},</if>
 			<if test="num != null  ">#{num},</if>
 			<if test="membersType != null  ">#{membersType},</if>
 			<if test="isVaild != null  and isVaild != ''  ">#{isVaild},</if>
@@ -135,6 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
 			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
          </trim>
+         order by id desc
     </insert>
 	 
     <update id="updateCouponManger" parameterType="CouponManger">
