@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import com.ruoyi.system.domain.MyCoupon;
+
 import java.util.List;	
 
 /**
@@ -58,5 +59,11 @@ public interface MyCouponMapper
      * @return 结果
      */
 	public int deleteMyCouponByIds(String[] ids);
+
+	/**
+	 * @param code
+	 * @return
+	 */
+	public String selectCouponMangerByCouponCode(String code);
 	
 }

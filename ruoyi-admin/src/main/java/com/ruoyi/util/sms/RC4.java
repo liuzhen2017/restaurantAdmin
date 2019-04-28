@@ -1,6 +1,8 @@
 package com.ruoyi.util.sms;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -127,13 +129,36 @@ public class RC4 {
         }
         return result;
     }
+    
+    public static String createRandom(){
+		
+		 String val = "";   
+        
+		    Random random = new Random();   
+		    for(int i = 0; i < 6; i++)   
+		    {   
+		        String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num"; // 输出字母还是数字   
+		               
+		        if("char".equalsIgnoreCase(charOrNum)) // 字符串   
+		        {   
+		            int choice = random.nextInt(2) % 2 == 0 ? 65 : 97; //取得大写字母还是小写字母   
+		            val += (char) (choice + random.nextInt(26));   
+		        }   
+		        else if("num".equalsIgnoreCase(charOrNum)) // 数字   
+		        {   
+		            val += String.valueOf(random.nextInt(10));   
+		        }   
+		    }   
+			return val;
+	}
+
     public static void main(String[] args) {
     	String name ="张三";
     	//加密
     	Set<String> set =new HashSet<String>();
     	for(int i=0;i<10000000;i++){
     		
-    	  String key =RC4.encry_RC4_string(String.format("%07d",i),UUID.randomUUID().toString());
+    	  String key =RC4.encry_RC4_string(String.format("%2d",i),new Date().getTime()+"");
     	  if(! set.add(key)){
     		  throw new RuntimeException("优惠代码重复!");
     	  }

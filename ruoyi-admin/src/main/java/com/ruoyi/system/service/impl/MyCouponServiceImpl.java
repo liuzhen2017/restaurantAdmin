@@ -1,8 +1,10 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ruoyi.system.mapper.MyCouponMapper;
 import com.ruoyi.system.domain.MyCoupon;
 import com.ruoyi.system.service.IMyCouponService;
@@ -97,6 +99,15 @@ public class MyCouponServiceImpl implements IMyCouponService
 		selectMyCouponById.setId(id);
 		selectMyCouponById.setIsVaild(isVaild);
 	    return myCouponMapper.updateMyCoupon(selectMyCouponById);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ruoyi.system.service.IMyCouponService#selectCouponMangerByCouponCode(java.lang.String)
+	 */
+	@Override
+	public String selectCouponMangerByCouponCode(String code) {
+		return myCouponMapper.selectCouponMangerByCouponCode(code);
+		
 	}
 	
 }

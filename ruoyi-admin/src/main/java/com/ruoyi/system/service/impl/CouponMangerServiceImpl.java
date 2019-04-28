@@ -99,11 +99,12 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 	@Transactional(readOnly=false,rollbackFor=Exception.class)
 	public AjaxResult insertCouponManger(CouponManger couponManger)
 	{
-		couponManger.setCouponCode(RC4.encry_RC4_string(String.format("%07d",(int) (Math.random()*1000))+"",UUID.randomUUID().toString()));
+		couponManger.setCouponCode(RC4.createRandom());
 		
 		CouponManger mangerByCouponCode = couponMangerMapper.selectCouponMangerByCouponCode(couponManger.getCouponCode());
-		if(mangerByCouponCode != null){
-			couponManger.setCouponCode(RC4.encry_RC4_string(String.format("%07d",(int) (Math.random()*1000))+"",UUID.randomUUID().toString()));
+		while(mangerByCouponCode !=null){
+			couponManger.setCouponCode(RC4.createRandom());
+			mangerByCouponCode =couponMangerMapper.selectCouponMangerByCouponCode(couponManger.getCouponCode());
 		}
 		
 		//未發放數量等於 總數量
@@ -133,7 +134,11 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 	    		my.setExplanation(couponManger.getExplanation());
 	    		my.setSpareField2(couponManger.getSpareField1());
 	    		//如果是优惠代码
-    			code =RC4.encry_RC4_string(String.format("%07d",i)+"",UUID.randomUUID().toString());
+    			code =RC4.createRandom();
+    			String dbMyCoupon= myCouponManger.selectCouponMangerByCouponCode(code);
+    			while(dbMyCoupon != null){
+    				dbMyCoupon= myCouponManger.selectCouponMangerByCouponCode(code);
+    			}
     			my.setCouponCode(code.toUpperCase());
 	    		myCouponManger.insertMyCoupon(my);
 	    	}

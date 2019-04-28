@@ -175,4 +175,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
     
+    <!-- 额外 -->
+    <select id="selectCouponMangerByCouponCode" resultType="String" >
+       select coupon_code from my_coupon
+       while is_vaild ='yes'
+       and  (STR_TO_DATE(`effective_time_end`,'%Y-%m-%d %H:%i:%s')> STR_TO_DATE(effective_time_end,'%Y-%m-%d %H:%i:%s')
+                    OR `effective_time_end` ='')
+       limit 1              
+    </select>
+    
 </mapper>

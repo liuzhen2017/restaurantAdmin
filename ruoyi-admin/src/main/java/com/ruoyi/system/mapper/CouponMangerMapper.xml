@@ -178,6 +178,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCouponMangerByCouponCode" parameterType="String" resultMap="CouponMangerResult">
         <include refid="selectCouponMangerVo"/>
         where coupon_code = #{couponCode}
+        and is_vaild = 'yes'
+        and  (STR_TO_DATE(`effective_time_end`,'%Y-%m-%d %H:%i:%s')> STR_TO_DATE(effective_time_end,'%Y-%m-%d %H:%i:%s')
+                    OR `effective_time_end` ='')
         limit 1
     </select>
 </mapper>

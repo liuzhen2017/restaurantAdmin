@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.domain.MyCoupon;
+
 import java.util.List;
 
 /**
@@ -52,5 +53,11 @@ public interface IMyCouponService
 	public int deleteMyCouponByIds(String ids);
 
 	public int settingVaild(int id);
+
+	/**
+	 * @param code
+	 * @return 
+	 */
+	public String selectCouponMangerByCouponCode(String code);
 	
 }
