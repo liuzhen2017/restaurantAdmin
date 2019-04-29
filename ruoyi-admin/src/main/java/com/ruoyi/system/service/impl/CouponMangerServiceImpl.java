@@ -86,7 +86,19 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 	@Override
 	public List<CouponManger> selectCouponMangerList(CouponManger couponManger)
 	{
-	    return couponMangerMapper.selectCouponMangerList(couponManger);
+		List<CouponManger> list2= couponMangerMapper.selectCouponMangerList(couponManger);
+		for(CouponManger c :list2){
+			try {
+
+				if (c.getEffectiveTimeEnd() != null && DateUtils.parseDate(c.getEffectiveTimeEnd(), "yyyy-MM-dd HH:mm:ss").before(new Date()) && c.getIsVaild().equals("yes")){
+					c.setIsVaild("no");
+					couponMangerMapper.updateCouponManger(c);
+			   }
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		return  list2;
 	}
 	
     /**

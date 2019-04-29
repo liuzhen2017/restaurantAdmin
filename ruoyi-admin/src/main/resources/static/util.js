@@ -1,5 +1,6 @@
 //上传图片
 function uploadFile(fileId) {
+	return "";
 	if(!fileId){
 		fileId ="file";
 	}
@@ -35,6 +36,29 @@ function uploadFile(fileId) {
 		}
 	});
 	return fileUrl;
+}
+function sendFile(file, obj) {
+    var data = new FormData();
+    data.append("file", file);
+    $.ajax({
+        type: "POST",
+        url: ctx + "common/upload",
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function(result) {
+            if (result.code == web_status.SUCCESS) {
+            	$(obj).summernote('editor.insertImage', result.url, result.fileName);
+			} else {
+				$.modal.alertError(result.msg);
+			}
+        },
+        error: function(error) {
+            $.modal.alertWarning("圖片上传失败。");
+        }
+    });
 }
 $("#choiseNo").on('click',function(){
 	

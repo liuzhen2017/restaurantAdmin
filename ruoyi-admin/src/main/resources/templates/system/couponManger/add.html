@@ -190,12 +190,12 @@
 		});
 		
 		function submitHandler() {
-			var url =uploadFile();;
-        	$("#picUrl").val(url);
+			/* var url =uploadFile();;
+        	$("#picUrl").val(url); */
 	        if ($.validate.form()) {
-	        	if(!url){
+	        	/* if(!url){
 	        		return null;
-	        	}
+	        	} */
 	            $.operate.save(prefix + "/add", $('#form-couponManger-add').serialize());
 	        }
 	    }

@@ -70,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="spareField5 != null  and spareField5 != '' "> and spare_field5 = #{spareField5}</if>
              <if test="spareField6 != null  and spareField6 != '' "> and spare_field6 = #{spareField6}</if>
          </where>
+         order by id desc
     </select>
     
     <select id="selectCouponMangerById" parameterType="Integer" resultMap="CouponMangerResult">
@@ -135,7 +136,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="spareField5 != null  and spareField5 != ''  ">#{spareField5},</if>
 			<if test="spareField6 != null  and spareField6 != ''  ">#{spareField6},</if>
          </trim>
-         order by id desc
     </insert>
 	 
     <update id="updateCouponManger" parameterType="CouponManger">
