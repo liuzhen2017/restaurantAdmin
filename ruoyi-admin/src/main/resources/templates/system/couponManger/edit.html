@@ -16,6 +16,9 @@
 			}
  
 </style>
+<link th:href="@{/ajax/libs/summernote/summernote.css}" rel="stylesheet"/>
+<link th:href="@{/ajax/libs/summernote/summernote-bs3.css}" rel="stylesheet"/>
+
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-couponManger-edit" th:object="${couponManger}">
@@ -107,20 +110,20 @@
 					<input id="effectiveTimeEnd" th:field="*{effectiveTimeEnd}" name="effectiveTimeEnd" placeholder="默认永久有效" class="form-control" type="text">
 				</div>
 			</div>
-			
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">使用说明：</label>
-				<div class="col-sm-8">
-				 <textarea name="instructions" th:field="*{instructions}" rows="10" cols="60" 	></textarea>
-					 
-				</div>
-			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">圖片：</label>
 				<div class="col-sm-8">
 				    <input id="file" name="file" class="form-control" type="file">
 					<input id="picUrl" name="picUrl" th:field="*{picUrl}" type="hidden">
 				    <a href="javascript:void(0)" onclick='openImg(document.getElementById("picUrl").value)'>查看圖片 </a>
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">使用说明：</label>
+				<div class="col-sm-8">
+					 <input id="instructions" name="instructions" class="form-control" th:field="*{instructions}"  type="hidden" />
+					<div id="editor" class="summernote"></div>	 
 				</div>
 			</div>
 			<div class="form-group">	
@@ -138,6 +141,8 @@
 	</div>
     <div th:include="include::footer"></div>
    <script type="text/javascript" src="../../../util.js"></script>
+   <script th:src="@{/ajax/libs/summernote/summernote.min.js}"></script>
+    <script th:src="@{/ajax/libs/summernote/summernote-zh-CN.js}"></script>
     	 <div th:include="include::footer"></div>
     <script type="text/javascript">
 		var prefix = ctx + "system/couponManger";
@@ -206,12 +211,47 @@
 				required:true,
 			}
 		});
-		
+		 $('.summernote').summernote({
+				height : '220px',
+				lang : 'zh-CN',
+				callbacks: {
+	                onImageUpload: function (files) {
+	                    sendFile(files[0], this);
+	                }
+	            }
+			});
+		   function sendFile(file, obj) {
+		        var data = new FormData();
+		        data.append("file", file);
+		        $.ajax({
+		            type: "POST",
+		            url: ctx + "common/upload",
+		            data: data,
+		            cache: false,
+		            contentType: false,
+		            processData: false,
+		            dataType: 'json',
+		            success: function(result) {
+		                if (result.code == web_status.SUCCESS) {
+		                	$(obj).summernote('editor.insertImage', result.url, result.fileName);
+		    			} else {
+		    				$.modal.alertError(result.msg);
+		    			}
+		            },
+		            error: function(error) {
+		                $.modal.alertWarning("圖片上传失败。");
+		            }
+		        });
+		    }
+		   var content = $("#instructions").val();
+		    $('#editor').summernote('code', content);
 		function submitHandler() {
 			var url =uploadFile();;
         	if(url){
-		        	$("#picUrl").val(url);
+		      $("#picUrl").val(url);
         	}
+        	var sHTML = $('.summernote').summernote('code');
+			$("#instructions").val(sHTML);
 	        if ($.validate.form()) {
 	            $.operate.save(prefix + "/edit", $('#form-couponManger-edit').serialize());
 	        }
