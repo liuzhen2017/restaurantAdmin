@@ -145,6 +145,7 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 	    		my.setCouponRole(couponManger.getCouponRole());
 	    		my.setExplanation(couponManger.getExplanation());
 	    		my.setSpareField2(couponManger.getSpareField1());
+	    		my.setSpareField3(couponManger.getRulesType()+"");;
 	    		//如果是优惠代码
     			code =RC4.createRandom();
     			String dbMyCoupon= myCouponManger.selectCouponMangerByCouponCode(code);
@@ -207,6 +208,7 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 				myCoupon.setCouponRole(couponManger.getCouponRole());
 				myCoupon.setExplanation(couponManger.getExplanation());
 				myCoupon.setSpareField2(couponManger.getSpareField1());
+				myCoupon.setSpareField3(couponManger.getRulesType()+"");;
 				//如果是强制失效所有      應急處理,如果有紕漏，可以緊急去掉優惠
 				if(StringUtils.isNoneBlank(couponManger.getIsVaild()) && couponManger.getIsVaild().equals("all")){
 					myCoupon.setIsVaild("no");

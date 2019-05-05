@@ -1,6 +1,5 @@
 //上传图片
 function uploadFile(fileId) {
-	return "";
 	if(!fileId){
 		fileId ="file";
 	}
