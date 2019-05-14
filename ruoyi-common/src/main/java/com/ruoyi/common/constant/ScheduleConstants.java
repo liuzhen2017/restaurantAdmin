@@ -7,9 +7,9 @@ package com.ruoyi.common.constant;
  */
 public interface ScheduleConstants
 {
-    public static final String TASK_CLASS_NAME = "__TASK_CLASS_NAME__";
+    public static final String TASK_CLASS_NAME = "__TASK_NAME__";
 
-    public static final String TASK_PROPERTIES = "__TASK_PROPERTIES__";
+    public static final String TASK_PROPERTIES = "__TASK_PROPERTIES_1__";
 
     /** 默认 */
     public static final String MISFIRE_DEFAULT = "0";

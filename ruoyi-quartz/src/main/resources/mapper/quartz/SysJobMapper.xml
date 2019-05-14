@@ -122,7 +122,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and is_send ='yes' -- 勾选了
 		and is_tis ='no'   -- 但是没有发送
 		
+	</select>
+	<select id="queryByLossLeve" parameterType="Map" resultType="Map">
+		SELECT  m.* FROM members m
+		WHERE m.is_vaild ='yes' -- 有效 
+		AND members_type = 1  -- 會員類型
+		AND DATE_FORMAT(NOW(),'%Y') >DATE_FORMAT(m.`vip_date`,'%Y') 
+		AND  4500 > (
+		SELECT IFNULL(SUM(money),0) FROM account_flow
+		WHERE  menu_id =m.id
+		AND tran_type IN(1,2)
+		AND is_vaild = 'yes'
+		AND  DATE_FORMAT(create_date,'%Y') = DATE_FORMAT(NOW(),'%Y')		
+		)
+		
 		
 	</select>
+	<update id="updateMem" parameterType="String">
+	  update members set #{key} =#{value}
+	  where id = #{id}
+	</update>
+	
 	<!-- append end -->
 </mapper> 

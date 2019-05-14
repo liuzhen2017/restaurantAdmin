@@ -3,6 +3,8 @@ package com.ruoyi.quartz.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ruoyi.quartz.domain.SysJob;
 
 /**
@@ -72,4 +74,16 @@ public interface SysJobMapper
 	 * @return
 	 */
 	public List<Map<String, Object>> selectBysql();
+
+	/**
+	 * @param key
+	 * @param value
+	 * @param memId
+	 */
+	public void updateMem(@Param("key")String key,@Param("value") String value,@Param("id") Integer memId);
+
+	/**
+	 * @return
+	 */
+	public List<Map<String, Object>> queryByLossLeve();
 }

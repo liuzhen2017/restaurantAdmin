@@ -48,9 +48,23 @@ public class CheckVIP
     		sendEmaill.setSendTo(m.get("email").toString());
 			try {
 				emailUtil.sendEmail(sendEmaill);
+				Integer memId= (Integer)m.get("id");
+	    		String key ="is_tis";
+	    		String value="yes";
+	    		sysJobMapper.updateMem(key,value,memId);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+    	});
+    	System.out.println("========查找VIP消費不足的定時任務========");
+    	List<Map<String, Object>> queryByLossLeve = sysJobMapper.queryByLossLeve();
+    	queryByLossLeve.forEach(m ->{
+    		System.out.println("降级会员信息===mem="+JSONObject.toJSONString(m));
+    		Integer memId= (Integer)m.get("id");
+    		String key ="members_type";
+    		String value="0";
+    		sysJobMapper.updateMem(key,value,memId);
+    		System.out.println("降级会员完毕===mem=");
     	});
     	//解锁
     	lock.unlock();
