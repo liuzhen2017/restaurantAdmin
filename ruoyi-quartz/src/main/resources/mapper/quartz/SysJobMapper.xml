@@ -138,8 +138,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		
 	</select>
-	<update id="updateMem" parameterType="String">
-	  update members set #{key} =#{value}
+	<update id="updateMem" parameterType="Map">
+	  update members set ${key} =#{value}
 	  where id = #{id}
 	</update>
 	
