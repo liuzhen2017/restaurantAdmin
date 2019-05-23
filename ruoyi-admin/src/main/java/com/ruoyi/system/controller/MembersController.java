@@ -67,9 +67,11 @@ public class MembersController extends BaseController
 		startPage();
 		members.setIsVaild("yes");
 		//如果是通用的
-		if("2".equals(members.getMembersType())){
-			members.setMembersType(null);
-		}
+		//页面做的操作,不进行控制
+		members.setMembersType(null);
+//		if("2".equals(members.getMembersType())){
+//			members.setMembersType(null);
+//		}
         List<Members> list = membersService.selectGrantList(members);
 		return getDataTable(list);
 	}

@@ -31,7 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 	
     <select id="selectAccountFlowList" parameterType="AccountFlow" resultMap="AccountFlowResult">
-        <include refid="selectAccountFlowVo"/>
+        select id, acc_no, tran_type, money, tran_des, before_money, after_money, create_date, 
+        (select name  from  members m
+        where m.id =menu_id
+        ) AS create_by
+        , 
+        menu_id, menu_acc_no, branch_store_id, branch_store_name, invoice_no, invoice_amount, net_amount,is_vaild,food_id,coupon_code from account_flow
         <where>  
             <if test="id != null "> and id = #{id}</if>
              <if test="accNo != null  and accNo != '' "> and acc_no = #{accNo}</if>

@@ -180,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where coupon_code = #{couponCode}
         and is_vaild = 'yes'
         and  (STR_TO_DATE(`effective_time_end`,'%Y-%m-%d %H:%i:%s')> STR_TO_DATE(effective_time_end,'%Y-%m-%d %H:%i:%s')
-                    OR `effective_time_end` ='')
+                    OR `effective_time_end` is null)
         limit 1
     </select>
 </mapper>

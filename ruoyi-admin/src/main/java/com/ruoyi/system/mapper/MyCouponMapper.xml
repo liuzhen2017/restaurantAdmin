@@ -150,7 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="couponValues != null  ">coupon_values = #{couponValues},</if>
             <if test="picUrl != null  and picUrl != '' ">  pic_url = #{picUrl},</if>
             <if test="couponRole != null ">  coupon_role = #{couponRole},</if>
-            <if test="explanation != null  and explanation != '' "> explanation= #{explanation}</if>
+            <if test="explanation != null  and explanation != '' "> explanation= #{explanation},</if>
              <if test="spareField1 != null  and spareField1 != ''  ">spare_field1 = #{spareField1},</if>
             <if test="spareField2 != null  and spareField2 != ''  ">spare_field2 = #{spareField2},</if>
             <if test="spareField3 != null  and spareField3 != ''  ">spare_field3 = #{spareField3},</if>
