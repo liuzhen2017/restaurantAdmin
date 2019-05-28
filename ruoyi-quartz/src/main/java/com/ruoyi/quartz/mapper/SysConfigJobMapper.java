@@ -1,6 +1,7 @@
 package com.ruoyi.quartz.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruoyi.quartz.domain.SysConfigJob;
 
@@ -61,5 +62,5 @@ public interface SysConfigJobMapper
      */
     public int deleteConfigByIds(String[] configIds);
 
-	public SysConfigJob selectByKey(String key);
+	public Map<String, Object> selectByKey(String key);
 }

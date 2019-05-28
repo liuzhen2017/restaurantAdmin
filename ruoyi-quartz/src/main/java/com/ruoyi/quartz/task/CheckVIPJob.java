@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.constant.HttpConstants;
 import com.ruoyi.quartz.domain.SysConfigJob;
 import com.ruoyi.quartz.mapper.SysConfigJobMapper;
 import com.ruoyi.quartz.mapper.SysJobMapper;
@@ -46,8 +47,9 @@ public class CheckVIPJob
     	Lock lock =new ReentrantLock();
     	lock.lock();
     	List<Map<String, Object>> listMap =sysJobMapper.selectBysql();
-    	SysConfigJob selectByKey = configMapper.checkConfigKeyUnique("invaildTisContent");
-    	JSONObject jb =JSONObject.parseObject(selectByKey.getConfigValue());
+    	Map<String,Object> selectConfig = configMapper.selectByKey(HttpConstants.sendEmail);
+        String json = (String)selectConfig.get("config_value");
+    	JSONObject jb =JSONObject.parseObject(json);
     	//{"send_title":"尊贵的VIP会员即将到期提醒", "send_content": "尊贵的VIP会员#name#,您的VIP会员将于#invaildDate#失效,请及时充值"}
     	listMap.forEach(m ->{
     		SendEmaill sendEmaill =new SendEmaill();

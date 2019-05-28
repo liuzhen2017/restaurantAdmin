@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</sql>
-	 <select id="selectByKey" parameterType="String" resultMap="SysConfigResult">
+	 <select id="selectByKey" parameterType="String" resultType="Map">
 	  <include refid="selectConfigVo"/>
 	  where config_key =#{key}
     </select>

@@ -3,6 +3,7 @@ package com.ruoyi.quartz.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -35,10 +36,8 @@ public class SendEmailUtil {
          //设置传输协议
          props.setProperty("mail.transport.protocol", "smtp");
 		//设置发件人的SMTP服务器地址
-         SysConfigJob config  =new SysConfigJob();
-         config.setConfigKey(HttpConstants.sendEmail);
-         SysConfigJob selectConfig = configMapper.selectConfig(config);
-         String json = selectConfig.getConfigValue();
+         Map<String,Object> selectConfig = configMapper.selectByKey(HttpConstants.sendEmail);
+         String json = (String)selectConfig.get("config_value");
          
 //         {"send_title":"找回密碼郵件", "send_content": "請點擊以下鏈接進行驗證,有效期為兩個小時", "senderAccount": "294442437@qq.com", "senderPassword": "lfnevylvbsjxcagb", "smtpHost": "smtp.qq.com", "retrieve_url": "http://localhost:8082/api/members/checkTokenEmail.do"}
          JSONObject jsonObject =JSONObject.parseObject(json);
