@@ -140,7 +140,15 @@
                 onImageUpload: function (files) {
                     sendFile(files[0], this);
                 }
-			}
+			},toolbar: [
+	                        // [groupName, [list of button]]
+	                        ['style', ['bold', 'italic', 'underline', 'clear']],
+	                        ['font', ['strikethrough', 'superscript', 'subscript']],
+	                        ['fontsize', ['fontsize']],
+	                        ['color', ['color']],
+	                        ['para', ['ul', 'ol', 'paragraph']],
+	                        ['height', ['height']]
+	                      ]
 		});
         var startDate = laydate.render({
             elem: '#takeEffectDate',
@@ -251,7 +259,7 @@
 	        		return null;
 	        	} 
 	        	var sHTML = $('.summernote').summernote('code');
-				$("#describes").val(sHTML);
+				$("#describes").val(encodeURIComponent(sHTML));
 	        	$("#picUrl").val(url);
 	        	//$("#spareField2").val(url);
 	        	

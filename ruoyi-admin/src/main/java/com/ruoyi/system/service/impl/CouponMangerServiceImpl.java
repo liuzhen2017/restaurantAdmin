@@ -186,6 +186,7 @@ public class CouponMangerServiceImpl implements ICouponMangerService
 		if(selectCouponMangerById.getIsVaild().equals("no")){
 			return AjaxResult.error("該優惠券已經失效,不允許修改!");
 		}
+		selectCouponMangerById.setInstructions(couponManger.getInstructions());
 		selectCouponMangerById.setTitle(couponManger.getTitle());
 		selectCouponMangerById.setCouponValues(couponManger.getCouponValues());
 		selectCouponMangerById.setEffectiveTimeBegin(couponManger.getEffectiveTimeBegin());

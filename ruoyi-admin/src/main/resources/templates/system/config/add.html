@@ -87,7 +87,15 @@
 			callbacks: {
                 onImageUpload: function (files) {
                     sendFile(files[0], this);
-                }
+                },toolbar: [
+	                        // [groupName, [list of button]]
+	                        ['style', ['bold', 'italic', 'underline', 'clear']],
+	                        ['font', ['strikethrough', 'superscript', 'subscript']],
+	                        ['fontsize', ['fontsize']],
+	                        ['color', ['color']],
+	                        ['para', ['ul', 'ol', 'paragraph']],
+	                        ['height', ['height']]
+	                      ]
             }
 		});
 	    function sendFile(file, obj) {
@@ -117,7 +125,7 @@
 	    function submitHandler() {
 	        if ($.validate.form()) {
 	        	var sHTML = $('.summernote').summernote('code');
-				$("#remark").val(sHTML);
+				$("#remark").val(encodeURIComponent(sHTML));
 	            $.operate.save(prefix + "/add", $('#form-config-add').serialize());
 	        }
 	    }

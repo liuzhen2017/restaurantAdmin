@@ -2,7 +2,10 @@ package com.ruoyi.system.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.ruoyi.common.base.BaseEntity;
+
+import java.net.URLDecoder;
 import java.util.Date;
 
 /**
@@ -212,6 +215,9 @@ public class CouponManger extends BaseEntity
 
 	public String getInstructions() 
 	{
+		if(instructions !=null){
+			return URLDecoder.decode(instructions);
+		}
 		return instructions;
 	}
 	public void setCouponCode(String couponCode) 
